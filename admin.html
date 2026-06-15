@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Pocket Money</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{--p:#0984e3;--s:#74b9ff;--g:#FDCB6E;--bg:#e8f4f8;--card:#fff;--txt:#2D3436;--t2:#636E72;--bdr:#ddd;--su:#00B894;--da:#FF7675;--sh:0 3px 15px rgba(0,0,0,0.07);--r:20px;--rs:14px;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html,body{width:100%;height:100%;font-family:'Segoe UI','Noto Sans Bengali',sans-serif;background:var(--bg);color:var(--txt);-webkit-tap-highlight-color:transparent;}
+        .app{max-width:480px;margin:0 auto;background:var(--bg);min-height:100vh;}
+
+        .header{background:linear-gradient(135deg,#0984e3,#74b9ff);color:white;padding:14px 18px;position:sticky;top:0;z-index:99;box-shadow:0 4px 20px rgba(9,132,227,0.3);}
+        .ht{display:flex;align-items:center;justify-content:space-between;}
+        .ps{display:flex;align-items:center;gap:10px;}
+        .pa{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FDCB6E,#FD79A8);display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:18px;border:2px solid rgba(255,255,255,0.5);flex-shrink:0;overflow:hidden;}
+        .pa img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+        .pn{font-weight:700;font-size:15px;}.pi{font-size:9px;opacity:0.8;}
+        .ib{background:rgba(255,255,255,0.2);border:none;color:white;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;position:relative;}
+        .bd{position:absolute;top:-5px;right:-5px;background:#FF7675;color:white;border-radius:50%;width:18px;height:18px;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:bold;}
+
+        .mc{padding:14px;padding-bottom:80px;}
+        .pg{display:none;}.pg.ac{display:block;}
+
+        /* ওয়ালেট */
+        .wallet-premium{background:linear-gradient(135deg,#1a1a3e,#16213e,#0f3460,#1a1a3e);border-radius:22px;padding:28px 22px;margin-bottom:15px;color:white;position:relative;overflow:hidden;box-shadow:0 10px 40px rgba(15,52,96,0.5);border:2px solid rgba(108,92,231,0.3);}
+        .snowflake{position:absolute;color:white;font-size:16px;animation:snowFall linear infinite;z-index:1;opacity:0.6;text-shadow:0 0 10px rgba(255,255,255,0.5);}
+        @keyframes snowFall{0%{transform:translateY(-30px) rotate(0deg);opacity:0.8}100%{transform:translateY(250px) rotate(360deg);opacity:0}}
+        .wallet-content{position:relative;z-index:3;}
+        .wh{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
+        .wl{font-size:12px;opacity:0.8;text-transform:uppercase;letter-spacing:2px;}
+        .vb{background:linear-gradient(135deg,#FDCB6E,#F39C12);color:#1a1a3e;padding:5px 12px;border-radius:15px;font-size:10px;font-weight:bold;}
+        .ba{font-size:56px;font-weight:900;margin:5px 0;}
+        .as{font-size:11px;margin-top:8px;padding:4px 10px;border-radius:12px;display:inline-block;font-weight:600;}
+        .ay{background:rgba(0,184,148,0.3);color:#00B894;}.an{background:rgba(253,203,110,0.3);color:#FDCB6E;}
+
+        .sg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:15px;}
+        .sc{background:var(--card);border-radius:var(--rs);padding:18px;text-align:center;box-shadow:var(--sh);}
+        .si{font-size:30px;margin-bottom:5px;}.sv{font-size:26px;font-weight:800;color:var(--p);}.sl{font-size:10px;color:var(--t2);}
+
+        /* টাইমার */
+        .timer-box{background:var(--card);border-radius:var(--r);padding:18px;margin-bottom:15px;text-align:center;box-shadow:var(--sh);border:2px solid var(--p);}
+        .timer-title{font-weight:700;font-size:15px;margin-bottom:10px;color:var(--p);}
+        .timer-clock{font-size:38px;font-weight:900;color:var(--p);font-family:'Courier New',monospace;letter-spacing:2px;}
+        .timer-sub{font-size:10px;color:var(--t2);margin-top:5px;}
+
+        /* ক্লিক কুলডাউন */
+        .cooldown-badge{display:inline-block;background:#FF7675;color:white;padding:4px 10px;border-radius:12px;font-size:10px;font-weight:700;animation:pulse 1s infinite;}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+        /* বোনাস কার্ড */
+        .bonus-card{background:linear-gradient(135deg,#00B894,#55EFC4);border-radius:var(--r);padding:18px;margin-bottom:12px;color:white;text-align:center;box-shadow:0 6px 20px rgba(0,184,148,0.3);}
+        .bonus-card.claimed{background:linear-gradient(135deg,#B2BEC3,#636E72);box-shadow:none;}
+        .bonus-card.special{background:linear-gradient(135deg,#6C5CE7,#A29BFE);}
+        .bonus-card h3{font-size:18px;margin-bottom:6px;}
+        .bonus-card .bonus-amount{font-size:28px;font-weight:900;}
+        .bonus-card .bonus-info{font-size:11px;opacity:0.8;margin-top:4px;}
+
+        .cs{background:var(--card);border-radius:var(--r);padding:18px;margin-bottom:15px;box-shadow:var(--sh);}
+        .ct{font-weight:700;font-size:15px;margin-bottom:12px;text-align:center;}
+        .cr{display:flex;justify-content:space-around;align-items:flex-end;gap:6px;padding:10px 0;min-height:130px;}
+        .ci{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;}
+        .cb{width:28px;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#0984e3,#74b9ff);position:relative;min-height:4px;transition:0.5s;}
+        .cb .fl{width:10px;height:13px;background:radial-gradient(circle,#FFD700,#FF8C00);border-radius:50% 50% 30% 30%;position:absolute;top:-10px;left:50%;transform:translateX(-50%);animation:fk 0.3s infinite alternate;}
+        @keyframes fk{0%{transform:translateX(-50%) scale(1,1)}100%{transform:translateX(-50%) scale(0.7,1.3)}}
+        .cd{font-size:10px;color:var(--t2);font-weight:600;}.ca{font-size:9px;color:var(--su);font-weight:700;}
+        .cnv{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+        .cnb{background:var(--bg);border:1px solid var(--bdr);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;}
+        .csm{text-align:center;font-size:12px;padding:10px;background:var(--bg);border-radius:10px;margin-top:10px;font-weight:600;}
+
+        .adc{background:linear-gradient(180deg,#0a0a2e,#1a1a4e,#0d0d35,#080820);border-radius:var(--r);padding:6px;margin-bottom:14px;position:relative;overflow:hidden;cursor:pointer;box-shadow:0 6px 25px rgba(30,60,180,0.35);border:2px solid rgba(100,150,255,0.25);min-height:170px;}
+        .adi{position:relative;z-index:2;text-align:center;padding:25px 14px;color:white;}
+        .adi .aic{font-size:50px;margin-bottom:8px;}.adi .at{font-size:22px;font-weight:900;}.adi .ast{font-size:12px;opacity:0.9;margin-top:4px;}
+        .adi .ar{display:inline-block;background:linear-gradient(135deg,#FFD700,#FFA500);color:#1a1a2e;padding:8px 20px;border-radius:22px;margin-top:10px;font-weight:800;font-size:15px;}
+        .rd{position:absolute;background:linear-gradient(180deg,transparent,rgba(100,150,255,0.5));width:1.5px;border-radius:0 0 4px 4px;animation:rn linear infinite;z-index:1;}
+        @keyframes rn{0%{transform:translateY(-100px);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(220px);opacity:0}}
+        .lt{position:absolute;width:2px;background:rgba(255,255,200,0.85);z-index:1;animation:fls 4s infinite;box-shadow:0 0 12px rgba(255,255,200,0.7);}
+        @keyframes fls{0%,92%,100%{opacity:0}93%,95%{opacity:1}94%{opacity:0.3}}
+        .star-ad{position:absolute;width:3px;height:3px;background:white;border-radius:50%;z-index:1;animation:tw 2s infinite;}
+        @keyframes tw{0%,100%{opacity:0.3;transform:scale(1)}50%{opacity:1;transform:scale(1.8)}}
+
+        .lo{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+        .spin{width:50px;height:50px;border:5px solid rgba(255,255,255,0.2);border-top:5px solid var(--g);border-radius:50%;animation:spn 0.8s linear infinite;}
+        @keyframes spn{to{transform:rotate(360deg)}}
+        .ltx{color:white;margin-top:15px;font-weight:700;font-size:16px;}
+        .spp{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;border-radius:18px;padding:30px 25px;text-align:center;z-index:9999;box-shadow:0 15px 50px rgba(0,0,0,0.3);}
+        .spp .ck{font-size:50px;color:var(--su);margin-bottom:8px;}.spp .am{font-size:26px;font-weight:800;color:var(--p);}.spp .sb{font-size:13px;color:var(--t2);margin-top:4px;}
+
+        .tk{background:var(--card);border-radius:var(--r);padding:16px;margin-bottom:10px;box-shadow:var(--sh);border-left:4px solid var(--p);}
+        .tk.dn{border-left-color:var(--su);opacity:0.8;}
+        .th{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+        .tt{font-weight:700;font-size:14px;}.tr{background:linear-gradient(135deg,var(--p),var(--s));color:white;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:bold;}
+
+        .btn{border:none;padding:12px 20px;border-radius:20px;cursor:pointer;font-weight:700;font-size:13px;width:100%;text-transform:uppercase;}
+        .btn:active{transform:scale(0.96);}
+        .bp{background:linear-gradient(135deg,var(--p),var(--s));color:white;}.bp:disabled{background:#B2BEC3;}
+        .bs{background:linear-gradient(135deg,#00B894,#55EFC4);color:white;}
+        .bw{background:linear-gradient(135deg,#FDCB6E,#F39C12);color:#1a1a3e;font-weight:900;}
+
+        .sect{font-size:18px;font-weight:800;margin-bottom:12px;}
+        .lw{background:#FFF3CD;border:1px solid #FDCB6E;padding:8px;border-radius:8px;text-align:center;font-weight:700;color:#856404;margin-top:6px;display:none;font-size:12px;}
+
+        .prs{background:var(--card);border-radius:var(--r);padding:16px;margin:14px 0;box-shadow:var(--sh);}
+        .pri{margin-bottom:10px;}.prl{display:flex;justify-content:space-between;margin-bottom:4px;font-size:12px;font-weight:600;}
+        .prb{height:8px;background:var(--bdr);border-radius:8px;overflow:hidden;}
+        .prf{height:100%;background:linear-gradient(90deg,var(--p),var(--s));border-radius:8px;transition:width 0.5s;}
+
+        .wdw{background:linear-gradient(180deg,#0c2461,#1e3799,#4a69bd);border-radius:20px;margin-bottom:10px;overflow:hidden;box-shadow:0 10px 40px rgba(12,36,97,0.5);}
+        .wdc{padding:25px 20px;position:relative;z-index:2;}.wdt{color:white;font-size:20px;font-weight:800;text-align:center;margin-bottom:20px;}
+        .pmw{display:flex;gap:12px;margin-bottom:20px;}
+        .pcw{flex:1;padding:18px 12px;border:2px solid rgba(255,255,255,0.3);border-radius:14px;text-align:center;cursor:pointer;background:rgba(255,255,255,0.1);transition:all 0.3s;}
+        .pcw.sel{border-color:#FFD700;background:rgba(255,215,0,0.15);}.pcw img{width:50px;height:50px;object-fit:contain;border-radius:8px;margin-bottom:6px;}.pcw .pl{color:white;font-weight:700;font-size:14px;}
+        .inw{width:100%;padding:15px 18px;border:2px solid rgba(255,255,255,0.3);border-radius:12px;font-size:16px;background:rgba(255,255,255,0.15);color:white;margin-bottom:12px;outline:none;-webkit-appearance:none;appearance:none;}
+        .inw:focus{border-color:#FFD700;background:rgba(255,255,255,0.2);}.inw::placeholder{color:rgba(255,255,255,0.5);font-size:14px;}
+        .ifw{padding:12px;border-radius:10px;margin:10px 0;background:rgba(255,255,255,0.15);color:white;font-size:12px;text-align:center;}
+        .btw{border:none;padding:15px 20px;border-radius:25px;cursor:pointer;font-weight:800;font-size:15px;width:100%;text-transform:uppercase;letter-spacing:1px;background:linear-gradient(135deg,#FFD700,#FFA500);color:#1a1a2e;box-shadow:0 5px 20px rgba(255,215,0,0.4);}
+        .btw:active{transform:scale(0.95);}.btw:disabled{background:#666;color:#999;box-shadow:none;}
+        .lkw{text-align:center;padding:30px 20px;color:white;}.lkw .li{font-size:60px;margin-bottom:12px;}
+
+        .rfb{background:var(--bg);padding:12px;border-radius:10px;margin:8px 0;}
+        .txi{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bdr);font-size:12px;}
+        .txc{color:var(--su);font-weight:700;}.txd{color:var(--da);font-weight:700;}
+        .tx-status{font-size:9px;padding:2px 6px;border-radius:8px;margin-left:5px;}.tx-pending{background:#FFF3CD;color:#856404;}.tx-approved{background:#D4EDDA;color:#155724;}
+
+        .lbi{display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:10px;margin-bottom:5px;}
+        .lbr{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;}
+        .lbr1{background:linear-gradient(135deg,#FFD700,#FFA500);color:#2D3436;}.lbr2{background:linear-gradient(135deg,#C0C0C0,#E0E0E0);color:#2D3436;}.lbr3{background:linear-gradient(135deg,#CD7F32,#D2691E);color:white;}
+
+        .bn{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:white;display:flex;justify-content:space-around;padding:6px 3px;box-shadow:0 -3px 15px rgba(0,0,0,0.06);z-index:999;border-radius:18px 18px 0 0;}
+        .ni{text-align:center;color:#B2BEC3;cursor:pointer;padding:6px;font-size:9px;font-weight:600;border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;}
+        .ni:active{transform:scale(0.9);}.ni.ac{color:var(--p);}.ni i{font-size:20px;pointer-events:none;}.ni span{pointer-events:none;}
+    </style>
+</head>
+<body>
+    <div class="app" id="app">
+        <div class="header"><div class="ht"><div class="ps"><div class="pa" id="pa"><span id="pat">👤</span></div><div><div class="pn" id="pn">User</div><div class="pi" id="pi">ID: ---</div></div></div><div class="ha"><button class="ib" onclick="sp('inbox')"><i class="fas fa-envelope"></i><span class="bd" id="mb" style="display:none;">0</span></button></div></div></div>
+        <div class="mc" id="sc">
+            <div class="pg ac" id="homePage">
+                <div class="wallet-premium" id="walletPremium"></div>
+                <div class="sg"><div class="sc"><div class="si">👥</div><div class="sv" id="rc">0</div><div class="sl">Referrals</div></div><div class="sc"><div class="si">✅</div><div class="sv" id="tc">0</div><div class="sl">Tasks Done</div></div><div class="sc"><div class="si">👆</div><div class="sv" id="toc">0</div><div class="sl">Touches</div></div><div class="sc"><div class="si">🎁</div><div class="sv" id="bc">0</div><div class="sl">Bonuses</div></div></div>
+                <div class="timer-box"><div class="timer-title">⏱️ Next Bonus In</div><div class="timer-clock" id="timerClock">00:00:00</div><div class="timer-sub">Earn bonus every few minutes!</div></div>
+                <div id="dailyBonusContainer"></div>
+                <div id="specialBonusContainer"></div>
+                <div class="cs"><div class="cnv"><button class="cnb" onclick="cw(-7)">◀</button><span class="ct" id="cwt">This Week</span><button class="cnb" onclick="cw(7)">▶</button></div><div class="cr" id="cr"></div><div class="csm" id="csm"></div></div>
+            </div>
+            <div class="pg" id="taskPage">
+                <div class="sect">📋 Tasks</div>
+                <div class="adc" onclick="hac()" id="adc"></div>
+                <div class="tk"><div class="th"><span class="tt">👆 One Click Earn</span><span class="tr">+<span id="crw">1</span> Tk</span></div><button class="btn bp" id="ctb" onclick="dct()">Click to Earn</button><p style="text-align:center;margin-top:6px;font-size:11px;color:var(--t2);">Today: <strong id="ccd">0</strong>/<strong id="cld">10</strong> | <span id="cooldownText" style="color:#FF7675;display:none;"></span></p><div class="lw" id="dlw">⚠️ Daily limit!</div></div>
+                <div class="sect" style="margin-top:12px;">🔗 Joining Tasks</div><div id="jtc"></div>
+                <div class="prs"><h4 style="margin-bottom:10px;">📊 Progress</h4><div class="pri"><div class="prl"><span>📢 Ads</span><span id="apt">0/10</span></div><div class="prb"><div class="prf" id="apb" style="width:0%"></div></div></div><div class="pri"><div class="prl"><span>👥 Refs</span><span id="rpt">0/3</span></div><div class="prb"><div class="prf" id="rpb" style="width:0%"></div></div></div><div class="pri"><div class="prl"><span>✅ Tasks</span><span id="tpt">0/4</span></div><div class="prb"><div class="prf" id="tpb" style="width:0%"></div></div></div></div>
+            </div>
+            <div class="pg" id="supportPage"><div class="sect">🆘 Support</div><div class="tk"><video controls style="width:100%;border-radius:10px;" poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect fill='%230984e3' width='400' height='200'/%3E%3Ctext fill='white' x='50%25' y='50%25' text-anchor='middle' font-size='18'%3E📹%3C/text%3E%3C/svg%3E"><source src="#" type="video/mp4"></video></div><button class="btn bp" onclick="window.open('https://t.me/pocketmoney_support')">💬 Telegram</button></div>
+            <div class="pg" id="referralPage"><div class="sect">🔗 Referral</div><div class="tk"><div class="th"><span class="tt" id="rft">Invite Friends</span><span class="tr">+<span id="rfr">5</span> Tk</span></div><div class="rfb"><input type="text" class="inw" id="rli" readonly style="color:#2D3436;background:white;border-color:#ddd;"></div><button class="btn bp" onclick="crl()">📋 Copy</button><button class="btn bs" style="margin-top:6px;" onclick="swa()">💚 WhatsApp</button></div></div>
+            <div class="pg" id="walletPage"><div class="sect">💳 Wallet</div><div id="wsc"></div><div class="tk" style="margin-top:10px;"><div class="th"><span class="tt">📄 Transactions</span></div><div id="txh" style="max-height:200px;overflow-y:auto;"></div></div><div class="tk"><div class="th"><span class="tt">🏆 Leaderboard</span></div><div id="lbl"></div></div></div>
+            <div class="pg" id="inboxPage"><div class="sect">📨 Inbox</div><button class="btn bp" style="margin-bottom:10px;background:transparent;border:2px solid var(--p);color:var(--p);" onclick="sp('home')">⬅ Home</button><div id="ims"></div></div>
+        </div>
+        <div class="bn"><button class="ni ac" onclick="sp('home')"><i class="fas fa-home"></i><span>Home</span></button><button class="ni" onclick="sp('task')"><i class="fas fa-tasks"></i><span>Tasks</span></button><button class="ni" onclick="sp('support')"><i class="fas fa-headset"></i><span>Support</span></button><button class="ni" onclick="sp('referral')"><i class="fas fa-users"></i><span>Refer</span></button><button class="ni" onclick="sp('wallet')"><i class="fas fa-wallet"></i><span>Wallet</span></button></div>
+    </div>
+    <div class="lo" id="lo" style="display:none;"><div class="spin"></div><div class="ltx" id="lot">Loading...</div></div>
+    <div class="spp" id="spp" style="display:none;"><div class="ck">✅</div><div class="am" id="eam">+1 Tk</div><div class="sb">Successfully added!</div></div>
+
+    <script>
+        const K='pm_v10_';
+        let U,AD,SP='bkash',WO=0,isInputFocused=false,timerInterval=null,clickCooldown=0,cooldownInterval=null;
+
+        const dU=()=>({id:'',bal:50,rc:0,tc:0,toc:0,bc:0,cc:0,ap:false,vip:false,de:{},tx:[],rf:[],jt:[],pn:'User',tid:null,av:null,lr:'',dailyBonusClaimed:'',specialBonusClaimed:[],lastBonusTime:0,lastClickTime:0});
+        const dA=()=>({adT:'View Ad',adS:'Click to earn',adL:['https://google.com','https://youtube.com','https://facebook.com'],adE:1,adLm:10,pc:'',bannerText:'📢 Welcome!',clickCooldownSec:30,jt:[{t:'Telegram Channel',l:'https://t.me/1',r:5},{t:'Telegram Group',l:'https://t.me/2',r:3},{t:'YouTube Subscribe',l:'https://youtube.com',r:4},{t:'Facebook Follow',l:'https://facebook.com',r:2}],rr:5,rt:'Invite Friends',rl:'',bi:'',ni:'',ms:[],ar:{a:10,r:3},mw:50,dailyBonus:{enabled:true,amount:0.25,intervalMinutes:5},specialBonuses:[]});
+
+        function init(){
+            let uid=localStorage.getItem(K+'uid');if(!uid){uid='PM'+Date.now().toString(36).toUpperCase();localStorage.setItem(K+'uid',uid);}
+            U=dU();U.id=uid;
+            try{if(window.Telegram&&window.Telegram.WebApp){const tg=window.Telegram.WebApp;tg.ready();const tu=tg.initDataUnsafe?tg.initDataUnsafe.user:null;if(tu){U.tid=tu.id;U.pn=tu.first_name+(tu.last_name?' '+tu.last_name:'');if(tu.photo_url)U.av=tu.photo_url;}}}catch(e){}
+            LD();CR();RA();RC();RW();RFU();CRef();RDB();RSB();startTimers();
+            document.addEventListener('focusin',(e)=>{if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')isInputFocused=true;});
+            document.addEventListener('focusout',()=>{setTimeout(()=>isInputFocused=false,200);});
+            setInterval(SY,5000);
+        }
+
+        function LD(){
+            const s=localStorage.getItem(K+'admin');AD=s?{...dA(),...JSON.parse(s)}:dA();
+            const u=localStorage.getItem(K+'user_'+U.id);if(u){const p=JSON.parse(u);U={...U,...p};U.de=U.de||{};U.tx=U.tx||[];U.rf=U.rf||[];U.jt=U.jt||[];U.specialBonusClaimed=U.specialBonusClaimed||[];}
+            if(!U.lastBonusTime)U.lastBonusTime=Date.now();
+        }
+        function SU(){localStorage.setItem(K+'user_'+U.id,JSON.stringify(U));}
+
+        function SY(){if(isInputFocused)return;const s=localStorage.getItem(K+'admin');if(s){const p=JSON.parse(s);AD={...dA(),...p};}const u=localStorage.getItem(K+'user_'+U.id);if(u){const p=JSON.parse(u);if(p.ap!==U.ap||p.vip!==U.vip||p.bal!==U.bal){U.ap=p.ap;U.vip=p.vip;U.bal=p.bal;SU();}}CR();RFU();RW();RDB();RSB();updateCooldownUI();}
+
+        function CR(){const t=new Date().toISOString().split('T')[0];if(U.lr!==t){U.cc=0;U.dailyBonusClaimed='';U.lr=t;SU();}}
+
+        function startTimers(){
+            if(timerInterval)clearInterval(timerInterval);
+            if(cooldownInterval)clearInterval(cooldownInterval);
+            timerInterval=setInterval(updateBonusTimer,1000);
+            cooldownInterval=setInterval(updateClickCooldown,1000);
+        }
+
+        function updateBonusTimer(){
+            const now=Date.now();const interval=((AD.dailyBonus&&AD.dailyBonus.intervalMinutes)||5)*60000;
+            const nextBonus=U.lastBonusTime+interval;const diff=Math.max(0,nextBonus-now);
+            const h=Math.floor(diff/3600000);const m=Math.floor((diff%3600000)/60000);const s=Math.floor((diff%60000)/1000);
+            document.getElementById('timerClock').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+
+        function updateClickCooldown(){
+            const cd=AD.clickCooldownSec||30;
+            const now=Date.now();clickCooldown=Math.max(0,Math.ceil((U.lastClickTime+cd*1000-now)/1000));
+            updateCooldownUI();
+        }
+
+        function updateCooldownUI(){
+            const cdText=document.getElementById('cooldownText');const btn=document.getElementById('ctb');
+            if(clickCooldown>0&&U.cc<AD.adLm){
+                cdText.style.display='inline';cdText.textContent=`⏳ ${clickCooldown}s wait`;
+                btn.disabled=true;btn.textContent=`Wait ${clickCooldown}s...`;
+            }else if(clickCooldown<=0&&U.cc<AD.adLm){
+                cdText.style.display='none';btn.disabled=false;btn.textContent='Click to Earn';
+            }
+        }
+
+        function RDB(){
+            const c=document.getElementById('dailyBonusContainer');const today=new Date().toISOString().split('T')[0];
+            if(!AD.dailyBonus||!AD.dailyBonus.enabled){c.innerHTML='';return;}
+            const claimed=U.dailyBonusClaimed===today;
+            const now=Date.now();const interval=(AD.dailyBonus.intervalMinutes||5)*60000;
+            const canClaim=(now-U.lastBonusTime)>=interval&&!claimed;
+            c.innerHTML=`<div class="bonus-card${claimed?' claimed':''}"><h3>🎁 Daily Bonus</h3><div class="bonus-amount">+${(AD.dailyBonus.amount||0.25).toFixed(2)} Tk</div><div class="bonus-info">Every ${AD.dailyBonus.intervalMinutes||5} min</div>${claimed?`<button class="btn bp" disabled>✅ Claimed</button>`:`<button class="btn bw" onclick="claimDailyBonus()" ${!canClaim?'disabled':''}>🎁 Claim</button>`}</div>`;
+        }
+
+        function claimDailyBonus(){
+            const today=new Date().toISOString().split('T')[0];if(U.dailyBonusClaimed===today)return;
+            const now=Date.now();const interval=(AD.dailyBonus.intervalMinutes||5)*60000;if((now-U.lastBonusTime)<interval)return;
+            U.dailyBonusClaimed=today;U.lastBonusTime=now;U.bal+=(AD.dailyBonus.amount||0.25);U.bc++;
+            U.tx.unshift({ty:'credit',am:(AD.dailyBonus.amount||0.25),ds:'Daily Bonus',dt:new Date().toISOString()});
+            SU();RFU();RW();RDB();
+        }
+
+        function RSB(){
+            const c=document.getElementById('specialBonusContainer');let h='';
+            (AD.specialBonuses||[]).forEach((sb,i)=>{
+                const sc=U.specialBonusClaimed||[];const claimed=sc.includes(i);
+                h+=`<div class="bonus-card special${claimed?' claimed':''}"><h3>🎯 ${sb.title||'Special Bonus'}</h3><div class="bonus-amount">+${(sb.amount||0).toFixed(2)} Tk</div><div class="bonus-info">${sb.desc||''}</div>${claimed?`<button class="btn bp" disabled>✅ Claimed</button>`:`<button class="btn bw" onclick="claimSpecialBonus(${i})">🎁 Claim</button>`}</div>`;
+            });c.innerHTML=h;
+        }
+
+        function claimSpecialBonus(i){
+            const sb=(AD.specialBonuses||[])[i];if(!sb)return;
+            if(!U.specialBonusClaimed)U.specialBonusClaimed=[];if(U.specialBonusClaimed.includes(i))return;
+            if(sb.link)window.open(sb.link,'_blank');
+            U.specialBonusClaimed.push(i);U.bal+=(sb.amount||0);U.bc++;
+            U.tx.unshift({ty:'credit',am:(sb.amount||0),ds:'Special: '+(sb.title||''),dt:new Date().toISOString()});
+            SU();RFU();RW();RSB();
+        }
+
+        function RW(){
+            const c=document.getElementById('walletPremium');let sf='';
+            for(let i=0;i<25;i++){const l=Math.random()*100,d=Math.random()*6,dr=2+Math.random()*5;sf+=`<div class="snowflake" style="left:${l}%;animation-delay:${d}s;animation-duration:${dr}s;">${['❄','❅','❆','✦','❋'][Math.floor(Math.random()*5)]}</div>`;}
+            c.innerHTML=sf+`<div class="wallet-content"><div class="wh"><span class="wl">👛 Balance</span><span class="vb" style="display:${U.vip?'inline-block':'none'};">👑 VIP</span></div><div class="ba"><span id="ub">${U.bal.toFixed(2)}</span> Tk</div><span class="as ${U.ap||U.vip?'ay':'an'}">${U.ap||U.vip?'✅ Approved':'⏳ Approval Needed'}</span></div>`;
+        }
+
+        function RA(){const c=document.getElementById('adc');let h='';for(let i=0;i<35;i++)h+=`<div class="rd" style="left:${Math.random()*100}%;height:${12+Math.random()*25}px;animation-delay:${Math.random()*2.5}s;animation-duration:${0.4+Math.random()*1}s;"></div>`;for(let i=0;i<3;i++)h+=`<div class="lt" style="left:${10+Math.random()*80}%;top:${Math.random()*45}%;height:${25+Math.random()*45}px;animation-delay:${i*1.2}s;"></div>`;for(let i=0;i<12;i++)h+=`<div class="star-ad" style="left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*2}s;"></div>`;c.innerHTML=h+`<div class="adi"><div class="aic">📡</div><div class="at">${AD.adT}</div><div class="ast">${AD.adS}</div><div class="ar">⚡ +${AD.adE} Tk</div></div>`;}
+
+        function hac(){if(clickCooldown>0)return;SL('Verifying...');if(AD.pc)try{eval(AD.pc)}catch(e){}if(AD.adL[0])window.open(AD.adL[0],'_blank');setTimeout(()=>{HL();PC();},2000);}
+        function SL(m){document.getElementById('lot').textContent=m;document.getElementById('lo').style.display='flex';}
+        function HL(){document.getElementById('lo').style.display='none';}
+
+        function PC(){
+            CR();if(U.cc>=AD.adLm){alert('Daily limit!');return;}
+            const cd=AD.clickCooldownSec||30;const now=Date.now();if(clickCooldown>0){alert(`Wait ${clickCooldown}s!`);return;}
+            U.lastClickTime=now;updateClickCooldown();
+            const e=AD.adE||1;U.cc++;U.toc++;U.tc++;U.bal+=e;
+            const t=new Date().toISOString().split('T')[0];U.de[t]=(U.de[t]||0)+e;
+            U.tx.unshift({ty:'credit',am:e,ds:'Click Task',dt:new Date().toISOString()});
+            SU();RFU();RC();RW();SS(e);
+        }
+        function SS(a){document.getElementById('eam').textContent='+'+a.toFixed(2)+' Tk';document.getElementById('spp').style.display='block';setTimeout(()=>{document.getElementById('spp').style.display='none';},2200);}
+        function dct(){hac();}
+
+        function RJC(){const c=document.getElementById('jtc');let h='';AD.jt.forEach((t,i)=>{const d=(U.jt||[]).includes(i);h+=`<div class="tk${d?' dn':''}"><div class="th"><span class="tt">🔗 ${t.t}</span><span class="tr">${d?'✅':'+'+t.r+' Tk'}</span></div><button class="btn ${d?'bs':'bp'}" onclick="DJ(${i})" ${d?'disabled':''}>${d?'✅ Done':'Join & Earn'}</button></div>`;});c.innerHTML=h||'<p>No tasks</p>';}
+        function DJ(i){const t=AD.jt[i];if(!t||(U.jt||[]).includes(i))return;if(t.l)window.open(t.l,'_blank');if(!U.jt)U.jt=[];U.jt.push(i);U.bal+=t.r;U.tc++;U.bc++;U.tx.unshift({ty:'credit',am:t.r,ds:'Joining: '+t.t,dt:new Date().toISOString()});const td=new Date().toISOString().split('T')[0];U.de[td]=(U.de[td]||0)+t.r;SU();RFU();RC();RW();}
+
+        function RWD(){const c=document.getElementById('wsc');const mw=AD.mw||50;if(!U.ap&&!U.vip){c.innerHTML=`<div class="wdw"><div class="lkw"><div class="li">🔒</div><h3>Withdrawal Locked</h3><p>Complete requirements.</p><div style="background:rgba(255,255,255,0.1);padding:12px;border-radius:10px;text-align:left;font-size:11px;">📢 Ads: ${U.cc}/${AD.ar.a}<br>👥 Refs: ${U.rc}/${AD.ar.r}<br>✅ Tasks: ${(U.jt||[]).length}/4<br>💰 Min: ${mw} Tk</div></div></div>`;return;}const bi=AD.bi||'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><rect fill="#E91E63" width="50" height="50" rx="8"/><text fill="white" x="25" y="30" text-anchor="middle" font-size="20" font-weight="bold">B</text></svg>');const ni=AD.ni||'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><rect fill="#E74C3C" width="50" height="50" rx="8"/><text fill="white" x="25" y="30" text-anchor="middle" font-size="20" font-weight="bold">N</text></svg>');c.innerHTML=`<div class="wdw"><div class="wdc"><div class="wdt">💰 Withdraw</div><div class="pmw"><div class="pcw ${SP==='bkash'?'sel':''}" onclick="SPY('bkash')"><img src="${bi}"><div class="pl">bKash</div></div><div class="pcw ${SP==='nagad'?'sel':''}" onclick="SPY('nagad')"><img src="${ni}"><div class="pl">Nagad</div></div></div><input type="tel" class="inw" id="wa" placeholder="Account Number" autocomplete="off"><input type="number" class="inw" id="wam" placeholder="Amount (Min ${mw} Tk)" inputmode="numeric" autocomplete="off"><div class="ifw">💡 Min: <strong>${mw} Tk</strong> | Bal: <strong>${U.bal.toFixed(2)}</strong></div><button class="btw" onclick="RWQ()" ${U.bal<mw?'disabled':''}>💸 Withdraw</button></div></div>`;}
+        function SPY(m){SP=m;RWD();}
+        function RWQ(){if(!U.ap&&!U.vip){alert('Locked!');return;}const mw=AD.mw||50;const ae=document.getElementById('wa'),am=document.getElementById('wam');if(!ae||!am){RWD();setTimeout(()=>alert('Refreshed!'),300);return;}const a=ae.value.trim(),m=parseFloat(am.value);if(!a||a.length<10){alert('Valid number!');ae.focus();return;}if(!m||m<mw){alert('Min '+mw+' Tk!');am.focus();return;}if(m>U.bal){alert('No balance!');return;}U.bal-=m;U.tx.unshift({ty:'debit',am:m,ds:'Withdraw: '+SP.toUpperCase()+' - '+a,dt:new Date().toISOString(),st:'pending'});const w=JSON.parse(localStorage.getItem(K+'withdrawals')||'[]');w.push({uid:U.id,un:U.pn,am:m,mt:SP,ac:a,dt:new Date().toISOString(),st:'pending'});localStorage.setItem(K+'withdrawals',JSON.stringify(w));SU();RFU();RW();alert('✅ Sent!\n'+SP.toUpperCase()+': '+a+'\n💰 '+m+' Tk');}
+
+        function RC(){const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];const today=new Date();const sw=new Date(today);sw.setDate(today.getDate()-today.getDay()+WO);document.getElementById('cwt').textContent=sw.toLocaleDateString('en-US',{day:'numeric',month:'short'})+' - '+(new Date(sw.getTime()+6*86400000)).toLocaleDateString('en-US',{day:'numeric',month:'short'});let max=1,tot=0;for(let i=0;i<7;i++){const d=new Date(sw);d.setDate(sw.getDate()+i);const e=U.de[d.toISOString().split('T')[0]]||0;if(e>max)max=e;tot+=e;}let h='';for(let i=0;i<7;i++){const d=new Date(sw);d.setDate(sw.getDate()+i);const ds=d.toISOString().split('T')[0];const e=U.de[ds]||0;const isT=d.toDateString()===today.toDateString();const ht=Math.max((e/max)*85,4);h+=`<div class="ci" onclick="alert('${days[d.getDay()]}\\n${ds}\\n+${e.toFixed(2)} Tk')"><div class="cb" style="height:${ht}px;${isT?'background:linear-gradient(180deg,#FFD700,#FFA500);':''}${e>0?'':'opacity:0.35;'}">${e>0?'<div class="fl"></div>':''}</div><span class="cd" style="${isT?'color:var(--p);font-weight:700;':''}">${days[d.getDay()]}</span><span class="ca">${e>0?'+'+e.toFixed(0):''}</span></div>`;}document.getElementById('cr').innerHTML=h;document.getElementById('csm').innerHTML=`💰 Week: <strong>${tot.toFixed(2)} Tk</strong>`;}
+        function cw(d){WO+=d;RC();}
+
+        function RFU(){if(isInputFocused)return;document.getElementById('pn').textContent=U.pn;document.getElementById('pi').textContent='ID: '+U.id.substring(0,8);if(U.av)document.getElementById('pa').innerHTML=`<img src="${U.av}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;document.getElementById('rc').textContent=U.rc;document.getElementById('tc').textContent=U.tc;document.getElementById('toc').textContent=U.toc;document.getElementById('bc').textContent=U.bc;document.getElementById('ccd').textContent=U.cc;document.getElementById('cld').textContent=AD.adLm;document.getElementById('crw').textContent=AD.adE;const w=document.getElementById('dlw'),b=document.getElementById('ctb');if(U.cc>=AD.adLm){w.style.display='block';b.disabled=true;b.textContent='Limit';}else{w.style.display='none';}updateCooldownUI();UP();document.getElementById('rft').textContent=AD.rt;document.getElementById('rfr').textContent=AD.rr;document.getElementById('rli').value=AD.rl||(location.origin+location.pathname+'?ref='+U.id);RJC();RTX();RLB();RIM();UB();RWD();}
+        function UP(){const ar=AD.ar.a,rr=AD.ar.r,tr=4;document.getElementById('apb').style.width=Math.min((U.cc/ar)*100,100)+'%';document.getElementById('rpb').style.width=Math.min((U.rc/rr)*100,100)+'%';document.getElementById('tpb').style.width=Math.min(((U.jt||[]).length/tr)*100,100)+'%';document.getElementById('apt').textContent=U.cc+'/'+ar;document.getElementById('rpt').textContent=U.rc+'/'+rr;document.getElementById('tpt').textContent=(U.jt||[]).length+'/'+tr;}
+        function UB(){const b=document.getElementById('mb');const c=(AD.ms||[]).length;if(c>0){b.style.display='flex';b.textContent=c>99?'99+':c;}else{b.style.display='none';}}
+        function RTX(){const c=document.getElementById('txh');let h='';(U.tx||[]).slice(0,20).forEach(tx=>{h+=`<div class="txi"><div><strong>${tx.ds}</strong><br><small>${new Date(tx.dt).toLocaleDateString('bn-BD')}</small>${tx.st==='pending'?'<span class="tx-status tx-pending">⏳ Pending</span>':''}${tx.st==='approved'?'<span class="tx-status tx-approved">✅ Approved</span>':''}</div><span class="${tx.ty==='credit'?'txc':'txd'}">${tx.ty==='credit'?'+':'-'}${tx.am.toFixed(2)} Tk</span></div>`;});c.innerHTML=h||'<p style="color:#999;text-align:center;">No transactions</p>';}
+        function RLB(){const c=document.getElementById('lbl');const users=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(K+'user_')){try{const u=JSON.parse(localStorage.getItem(k));users.push({n:u.pn||(u.id||'').substring(0,6),e:(u.bal||0)+((u.tx||[]).filter(t=>t.ty==='debit').reduce((s,t)=>s+(t.am||0),0)),me:u.id===U.id});}catch(e){}}}users.sort((a,b)=>b.e-a.e);let h='';users.slice(0,15).forEach((u,i)=>{const m=['🥇','🥈','🥉'];h+=`<div class="lbi"><div class="lbr${i<3?' lbr'+(i+1):''}" style="${i>=3?'background:#DFE6E9;':''}">${i<3?m[i]:i+1}</div><div style="flex:1;"><strong>${u.n}${u.me?' (You)':''}</strong></div><strong style="color:var(--p);">${u.e.toFixed(0)} Tk</strong></div>`;});c.innerHTML=h||'<p style="color:#999;">No data</p>';}
+        function RIM(){const c=document.getElementById('ims');let h='';(AD.ms||[]).slice().reverse().forEach(m=>{h+=`<div class="tk" style="border-left-color:#FDCB6E;"><strong>📢 Admin</strong><p style="margin-top:3px;">${m.text}</p><small style="color:#999;">${new Date(m.date).toLocaleString('bn-BD')}</small></div>`;});c.innerHTML=h||'<p style="text-align:center;color:#999;">No messages</p>';}
+
+        function crl(){const i=document.getElementById('rli');if(i){i.select();document.execCommand('copy');alert('✅ Copied!');}}
+        function swa(){window.open('https://wa.me/?text='+encodeURIComponent('💰 Pocket Money\n'+(document.getElementById('rli')?.value||'')),'_blank');}
+        function CRef(){const p=new URLSearchParams(location.search);const r=p.get('ref');if(r&&r!==U.id&&!(U.rf||[]).includes(r)){if(!U.rf)U.rf=[];U.rf.push(r);U.rc++;U.bal+=AD.rr;U.tx.unshift({ty:'credit',am:AD.rr,ds:'Referral Bonus',dt:new Date().toISOString()});SU();RFU();RW();}}
+
+        function sp(n){
+            document.querySelectorAll('.pg').forEach(p=>p.classList.remove('ac'));
+            document.querySelectorAll('.ni').forEach(n=>n.classList.remove('ac'));
+            const m={home:'homePage',task:'taskPage',support:'supportPage',referral:'referralPage',wallet:'walletPage',inbox:'inboxPage'};
+            const id=m[n];if(id)document.getElementById(id).classList.add('ac');
+            const nm={home:0,task:1,support:2,referral:3,wallet:4};
+            const idx=nm[n];if(idx!==undefined)document.querySelectorAll('.ni')[idx].classList.add('ac');
+            if(n==='task')RA();RFU();RW();RDB();RSB();document.getElementById('sc').scrollTop=0;
+        }
+
+        init();
+    </script>
+</body>
+</html>
