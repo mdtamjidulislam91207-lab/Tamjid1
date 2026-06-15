@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Money - Admin v9</title>
+    <style>
+        :root{--bg:#0a0a1a;--card:#151530;--p:#0984e3;--t:#e0e0e0;--tl:#aaa;--bdr:#252550;--s:#00B894;--d:#FF7675;--w:#FDCB6E;--r:14px;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;}
+        .wrap{max-width:1300px;margin:0 auto;padding:15px;}
+        .hdr{background:linear-gradient(135deg,#0984e3,#74b9ff);padding:25px;border-radius:var(--r);margin-bottom:20px;text-align:center;box-shadow:0 8px 30px rgba(9,132,227,0.3);}
+        .hdr h1{font-size:28px;}.ki{background:rgba(0,0,0,0.3);display:inline-block;padding:6px 15px;border-radius:20px;margin-top:8px;font-size:12px;font-family:monospace;}
+        .nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;background:var(--card);padding:12px;border-radius:var(--r);}
+        .nav button{padding:10px 18px;background:var(--bg);border:2px solid transparent;border-radius:20px;color:#aaa;cursor:pointer;font-weight:600;font-size:12px;transition:all 0.3s;}
+        .nav button:hover{border-color:var(--p);color:white;}.nav button.active{background:linear-gradient(135deg,#0984e3,#74b9ff);color:white;}
+        .sec{display:none;background:var(--card);padding:20px;border-radius:var(--r);margin-bottom:20px;}.sec.active{display:block;}
+        .st{font-size:20px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--bdr);}
+        .fg{margin-bottom:15px;}.fg label{display:block;margin-bottom:5px;color:var(--tl);font-weight:600;font-size:13px;}
+        .fc{width:100%;padding:10px 14px;background:var(--bg);border:2px solid var(--bdr);border-radius:8px;color:white;font-size:14px;}.fc:focus{border-color:var(--p);outline:none;}
+        textarea.fc{min-height:80px;resize:vertical;}
+        .btn{padding:10px 24px;border:none;border-radius:20px;cursor:pointer;font-weight:700;font-size:13px;margin:3px;transition:all 0.3s;}.btn:hover{transform:translateY(-2px);}
+        .btn-p{background:var(--p);color:white;}.btn-s{background:var(--s);color:white;}.btn-d{background:var(--d);color:white;}.btn-sm{padding:5px 12px;font-size:10px;}
+        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px;}
+        .stat{background:var(--bg);padding:22px;border-radius:var(--r);text-align:center;border:1px solid var(--bdr);}.stat h3{font-size:32px;color:var(--p);}.stat p{color:var(--tl);font-size:13px;margin-top:4px;}
+        table{width:100%;border-collapse:collapse;margin-top:10px;}th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--bdr);font-size:13px;}th{background:var(--bg);}
+        .card{background:var(--bg);padding:15px;border-radius:8px;margin-bottom:10px;border:1px solid var(--bdr);}
+        .badge{padding:3px 10px;border-radius:12px;font-size:9px;font-weight:700;}.badge-pending{background:var(--w);color:#1a1a1a;}.badge-approved{background:var(--s);color:white;}
+        .two{display:grid;grid-template-columns:1fr 1fr;gap:15px;}@media(max-width:768px){.two{grid-template-columns:1fr;}.nav{flex-direction:column;}}
+        .preview-img{width:70px;height:70px;object-fit:contain;border-radius:8px;border:2px solid var(--bdr);margin-top:5px;background:#1a1a1a;}
+        .toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+        .toggle{position:relative;display:inline-block;width:50px;height:26px;}
+        .toggle input{opacity:0;width:0;height:0;}
+        .toggle .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#555;transition:0.3s;border-radius:26px;}
+        .toggle .slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:white;transition:0.3s;border-radius:50%;}
+        .toggle input:checked+.slider{background:var(--s);}
+        .toggle input:checked+.slider:before{transform:translateX(24px);}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="hdr"><h1>⚙️ Pocket Money Admin</h1><div class="ki">🔑 KEY: pm_v9_ | Connected</div></div>
+        <div class="nav">
+            <button class="active" onclick="tab('dashboard')">📊 Dashboard</button>
+            <button onclick="tab('users')">👥 Users</button>
+            <button onclick="tab('ads')">📢 Ads</button>
+            <button onclick="tab('banner')">🎯 Banner</button>
+            <button onclick="tab('tasks')">📋 Tasks</button>
+            <button onclick="tab('referral')">🔗 Referral</button>
+            <button onclick="tab('bonus')">🎁 Bonus</button>
+            <button onclick="tab('withdrawals')">💵 Withdrawals</button>
+            <button onclick="tab('payment')">💳 Payment</button>
+            <button onclick="tab('settings')">⚙️ Settings</button>
+            <button onclick="tab('broadcast')">📨 Broadcast</button>
+        </div>
+
+        <div class="sec active" id="sec-dashboard"><h2 class="st">📊 Dashboard</h2><div class="stats"><div class="stat"><h3 id="du">0</h3><p>Users</p></div><div class="stat"><h3 id="db">0</h3><p>Balance</p></div><div class="stat"><h3 id="dp">0</h3><p>Pending WD</p></div><div class="stat"><h3 id="da">0</h3><p>Approved</p></div></div></div>
+        <div class="sec" id="sec-users"><h2 class="st">👥 Users</h2><div style="display:flex;gap:8px;margin-bottom:15px;"><input class="fc" id="us" placeholder="🔍 Search ID..." style="flex:1;"><button class="btn btn-p" onclick="sU()">🔍</button><button class="btn btn-p" onclick="lA()" style="background:var(--s);">📋 All</button></div><div id="ul"></div><div class="card" id="ec" style="display:none;"><h4 id="et"></h4><div class="fg"><label>💵 Add Balance</label><input type="number" class="fc" id="ab"></div><button class="btn btn-s" onclick="aB()">💵 Add</button><button class="btn btn-p" onclick="aU()">✅ Approve+VIP</button><button class="btn btn-d" onclick="bU()">🚫 Block</button></div></div>
+        <div class="sec" id="sec-ads"><h2 class="st">📢 Ad Settings</h2><div class="two"><div><div class="fg"><label>Title</label><input class="fc" id="adT"></div><div class="fg"><label>Subtitle</label><input class="fc" id="adS"></div><div class="fg"><label>Daily Limit</label><input type="number" class="fc" id="adLm" value="10"></div><div class="fg"><label>Earning Per Click</label><input type="number" class="fc" id="adE" value="1" step="0.1"></div></div><div><div class="fg"><label>Link 1</label><input type="url" class="fc" id="adL1"></div><div class="fg"><label>Link 2</label><input type="url" class="fc" id="adL2"></div><div class="fg"><label>Link 3</label><input type="url" class="fc" id="adL3"></div><div class="fg"><label>Portal Code</label><textarea class="fc" id="pc"></textarea></div></div></div><button class="btn btn-p" onclick="sA()">💾 Save Ads</button></div>
+        <div class="sec" id="sec-banner"><h2 class="st">🎯 Banner</h2><div class="fg"><label>Banner Text</label><input class="fc" id="bannerText"></div><button class="btn btn-p" onclick="sB()">💾 Save</button></div>
+        <div class="sec" id="sec-tasks"><h2 class="st">📋 Tasks</h2><div id="tf"></div><button class="btn btn-p" onclick="sT()">💾 Save</button></div>
+        <div class="sec" id="sec-referral"><h2 class="st">🔗 Referral</h2><div class="fg"><label>Title</label><input class="fc" id="rt"></div><div class="fg"><label>Reward</label><input type="number" class="fc" id="rr" value="5"></div><div class="fg"><label>Custom Link</label><input type="url" class="fc" id="rl"></div><button class="btn btn-p" onclick="sR()">💾 Save</button></div>
+
+        <!-- ===== বোনাস সেকশন ===== -->
+        <div class="sec" id="sec-bonus"><h2 class="st">🎁 Bonus Settings</h2>
+            <div class="card"><h4>📅 Daily Bonus</h4>
+                <div class="toggle-row"><label class="toggle"><input type="checkbox" id="dbEnabled" onchange="uPT()"><span class="slider"></span></label><span>Enable Daily Bonus</span></div>
+                <div class="fg"><label>Bonus Amount (Tk)</label><input type="number" class="fc" id="dbAmount" value="0.25" step="0.01"></div>
+                <div class="fg"><label>Interval (Minutes)</label><input type="number" class="fc" id="dbInterval" value="5"><p style="color:var(--tl);font-size:11px;margin-top:4px;">User can claim every X minutes</p></div>
+                <button class="btn btn-p" onclick="sDB()">💾 Save Daily Bonus</button>
+            </div>
+            <div class="card" style="margin-top:15px;"><h4>🎯 Special Bonuses</h4><p style="color:var(--tl);font-size:11px;margin-bottom:10px;">One-time bonuses with link. User claims once.</p><div id="sbList"></div><button class="btn btn-p" onclick="addSB()">➕ Add Special Bonus</button><button class="btn btn-s" onclick="sSB()" style="margin-top:10px;">💾 Save All Special Bonuses</button></div>
+        </div>
+
+        <div class="sec" id="sec-withdrawals"><h2 class="st">💵 Withdrawals</h2><div id="wl"></div></div>
+        <div class="sec" id="sec-payment"><h2 class="st">💳 Payment Icons</h2><div class="two"><div><div class="fg"><label>bKash URL</label><input type="url" class="fc" id="bi"></div><img id="bp" class="preview-img" style="display:none;"></div><div><div class="fg"><label>Nagad URL</label><input type="url" class="fc" id="ni"></div><img id="np" class="preview-img" style="display:none;"></div></div><button class="btn btn-p" onclick="sI()">💾 Save</button></div>
+        <div class="sec" id="sec-settings"><h2 class="st">⚙️ Settings</h2><div class="two"><div class="fg"><label>Ads Required</label><input type="number" class="fc" id="aa" value="10"></div><div class="fg"><label>Refs Required</label><input type="number" class="fc" id="ar" value="3"></div></div><div class="fg"><label>💰 Min Withdraw (Tk)</label><input type="number" class="fc" id="mw" value="50" min="10"></div><button class="btn btn-p" onclick="sS()">💾 Save</button></div>
+        <div class="sec" id="sec-broadcast"><h2 class="st">📨 Broadcast</h2><div class="fg"><label>Message</label><textarea class="fc" id="bm"></textarea></div><button class="btn btn-p" onclick="sBC()">📤 Send</button><h4 style="margin-top:15px;">History</h4><div id="mh"></div></div>
+    </div>
+
+    <script>
+        const K='pm_v9_';let S,su=null;
+        const dS=()=>({adT:'View Ad',adS:'Click',adL:['','',''],adE:1,adLm:10,pc:'',bannerText:'Welcome!',jt:[{t:'Task 1',l:'',r:5},{t:'Task 2',l:'',r:3},{t:'Task 3',l:'',r:4},{t:'Task 4',l:'',r:2}],rr:5,rt:'Invite',rl:'',bi:'',ni:'',ms:[],ar:{a:10,r:3},mw:50,dailyBonus:{enabled:true,amount:0.25,intervalMinutes:5},specialBonuses:[]});
+        function gS(){const s=localStorage.getItem(K+'admin');return s?{...dS(),...JSON.parse(s)}:dS();}
+        function pS(){localStorage.setItem(K+'admin',JSON.stringify(S));}
+        function gU(){const u=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(K+'user_'))try{u.push(JSON.parse(localStorage.getItem(k)))}catch(e){}}return u;}
+        function gW(){try{return JSON.parse(localStorage.getItem(K+'withdrawals')||'[]')}catch(e){return[];}}
+
+        function tab(n){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));document.getElementById('sec-'+n).classList.add('active');event.target.classList.add('active');RF();}
+        function RF(){
+            S=gS();
+            try{
+                document.getElementById('adT').value=S.adT||'';document.getElementById('adS').value=S.adS||'';document.getElementById('adLm').value=S.adLm||10;document.getElementById('adE').value=S.adE||1;
+                document.getElementById('adL1').value=S.adL[0]||'';document.getElementById('adL2').value=S.adL[1]||'';document.getElementById('adL3').value=S.adL[2]||'';document.getElementById('pc').value=S.pc||'';
+                document.getElementById('bannerText').value=S.bannerText||'';document.getElementById('rt').value=S.rt||'';document.getElementById('rr').value=S.rr||5;document.getElementById('rl').value=S.rl||'';
+                document.getElementById('aa').value=S.ar.a;document.getElementById('ar').value=S.ar.r;document.getElementById('mw').value=S.mw||50;
+                document.getElementById('bi').value=S.bi||'';document.getElementById('ni').value=S.ni||'';
+                document.getElementById('dbEnabled').checked=S.dailyBonus&&S.dailyBonus.enabled;
+                document.getElementById('dbAmount').value=S.dailyBonus?S.dailyBonus.amount:0.25;
+                document.getElementById('dbInterval').value=S.dailyBonus?S.dailyBonus.intervalMinutes:5;
+            }catch(e){}
+            uP();rD();rU();rT();rW();rM();rSB();
+        }
+
+        function uP(){const bi=document.getElementById('bi').value,ni=document.getElementById('ni').value;const bp=document.getElementById('bp'),np=document.getElementById('np');if(bi){bp.src=bi;bp.style.display='block';}else{bp.style.display='none';}if(ni){np.src=ni;np.style.display='block';}else{np.style.display='none';}}
+        function rD(){const u=gU(),w=gW();document.getElementById('du').textContent=u.length;document.getElementById('db').textContent=u.reduce((s,u)=>s+(u.bal||0),0).toFixed(0);document.getElementById('dp').textContent=w.filter(w=>w.st==='pending').length;document.getElementById('da').textContent=u.filter(u=>u.ap||u.vip).length;}
+        function lA(){const u=gU();let h='<table><tr><th>ID</th><th>Name</th><th>Balance</th><th>Status</th><th>Action</th></tr>';u.forEach(u=>{h+=`<tr><td>${(u.id||'').substring(0,8)}</td><td>${u.pn||'-'}</td><td>${(u.bal||0).toFixed(2)}</td><td>${u.ap?'✅':''}${u.vip?'👑':'⏳'}</td><td><button class="btn btn-p btn-sm" onclick="sel('${u.id}')">✏️</button></td></tr>`;});h+='</table>';document.getElementById('ul').innerHTML=h;}
+        function rU(){lA();}
+        function sU(){const q=document.getElementById('us').value.toLowerCase().trim();if(!q){lA();return;}const u=gU().filter(u=>(u.id||'').toLowerCase().includes(q)||(u.pn||'').toLowerCase().includes(q));let h='<table><tr><th>ID</th><th>Name</th><th>Balance</th><th>Action</th></tr>';u.forEach(u=>{h+=`<tr><td>${(u.id||'').substring(0,8)}</td><td>${u.pn||'-'}</td><td>${(u.bal||0).toFixed(2)}</td><td><button class="btn btn-p btn-sm" onclick="sel('${u.id}')">✏️</button></td></tr>`;});h+='</table>';document.getElementById('ul').innerHTML=h;}
+        function sel(uid){su=uid;document.getElementById('ec').style.display='block';document.getElementById('et').textContent='✏️ '+(uid||'').substring(0,12);document.getElementById('ab').value='';}
+        function uU(fn){if(!su)return alert('Select user!');const k=K+'user_'+su;const u=JSON.parse(localStorage.getItem(k));if(u){fn(u);localStorage.setItem(k,JSON.stringify(u));rU();rD();}}
+        function aB(){const a=parseFloat(document.getElementById('ab').value);if(!a||a<=0)return alert('Amount!');uU(u=>{u.bal+=a;if(!u.tx)u.tx=[];u.tx.unshift({ty:'credit',am:a,ds:'Admin added',dt:new Date().toISOString()});});document.getElementById('ab').value='';alert('✅ Added!');}
+        function aU(){uU(u=>{u.ap=true;u.vip=true;});alert('✅ Approved+VIP!');}
+        function bU(){uU(u=>{u.ap=false;u.vip=false;});alert('🚫 Blocked!');}
+
+        function sA(){S.adT=document.getElementById('adT').value;S.adS=document.getElementById('adS').value;S.adLm=parseInt(document.getElementById('adLm').value);S.adE=parseFloat(document.getElementById('adE').value);S.adL=[document.getElementById('adL1').value,document.getElementById('adL2').value,document.getElementById('adL3').value];S.pc=document.getElementById('pc').value;pS();alert('✅ Saved!');}
+        function sB(){S.bannerText=document.getElementById('bannerText').value;pS();alert('✅ Saved!');}
+        function rT(){let h='';S.jt.forEach((t,i)=>{h+=`<div class="card"><h4>Task ${i+1}</h4><div class="fg"><label>Title</label><input class="fc tt" data-i="${i}" value="${t.t||''}"></div><div class="fg"><label>Link</label><input class="fc tl" data-i="${i}" value="${t.l||''}"></div><div class="fg"><label>Reward</label><input type="number" class="fc tr" data-i="${i}" value="${t.r||0}"></div></div>`;});document.getElementById('tf').innerHTML=h;}
+        function sT(){document.querySelectorAll('.tt').forEach(e=>{S.jt[parseInt(e.dataset.i)].t=e.value;});document.querySelectorAll('.tl').forEach(e=>{S.jt[parseInt(e.dataset.i)].l=e.value;});document.querySelectorAll('.tr').forEach(e=>{S.jt[parseInt(e.dataset.i)].r=parseInt(e.value)||0;});pS();alert('✅ Saved!');}
+        function sR(){S.rt=document.getElementById('rt').value;S.rr=parseInt(document.getElementById('rr').value);S.rl=document.getElementById('rl').value;pS();alert('✅ Saved!');}
+        function sI(){S.bi=document.getElementById('bi').value.trim();S.ni=document.getElementById('ni').value.trim();pS();uP();alert('✅ Saved!');}
+        function sS(){S.ar={a:parseInt(document.getElementById('aa').value),r:parseInt(document.getElementById('ar').value)};S.mw=parseInt(document.getElementById('mw').value)||50;pS();alert('✅ Saved!');}
+
+        function sDB(){S.dailyBonus={enabled:document.getElementById('dbEnabled').checked,amount:parseFloat(document.getElementById('dbAmount').value)||0.25,intervalMinutes:parseInt(document.getElementById('dbInterval').value)||5};pS();alert('✅ Daily Bonus Saved!');}
+        function rSB(){let h='';(S.specialBonuses||[]).forEach((sb,i)=>{h+=`<div class="card"><h4>Bonus #${i+1}</h4><div class="fg"><label>Title</label><input class="fc sb-t" data-i="${i}" value="${sb.title||''}"></div><div class="fg"><label>Description</label><input class="fc sb-d" data-i="${i}" value="${sb.desc||''}"></div><div class="fg"><label>Link (optional)</label><input class="fc sb-l" data-i="${i}" value="${sb.link||''}"></div><div class="fg"><label>Amount (Tk)</label><input type="number" class="fc sb-a" data-i="${i}" value="${sb.amount||0}" step="0.01"></div><button class="btn btn-d btn-sm" onclick="rmSB(${i})">🗑 Remove</button></div>`;});document.getElementById('sbList').innerHTML=h;}
+        function addSB(){if(!S.specialBonuses)S.specialBonuses=[];S.specialBonuses.push({title:'Special Bonus',desc:'',link:'',amount:1});pS();rSB();}
+        function rmSB(i){S.specialBonuses.splice(i,1);pS();rSB();}
+        function sSB(){document.querySelectorAll('.sb-t').forEach(e=>{S.specialBonuses[parseInt(e.dataset.i)].title=e.value;});document.querySelectorAll('.sb-d').forEach(e=>{S.specialBonuses[parseInt(e.dataset.i)].desc=e.value;});document.querySelectorAll('.sb-l').forEach(e=>{S.specialBonuses[parseInt(e.dataset.i)].link=e.value;});document.querySelectorAll('.sb-a').forEach(e=>{S.specialBonuses[parseInt(e.dataset.i)].amount=parseFloat(e.value)||0;});pS();alert('✅ Special Bonuses Saved!');}
+
+        function rW(){const w=gW();let h='';w.forEach((w,i)=>{h+=`<div class="card" style="display:flex;justify-content:space-between;"><div><strong>${(w.uid||'').substring(0,8)}</strong> - ${w.am} Tk (${w.mt})<br><small>${w.ac} | ${new Date(w.dt).toLocaleString('bn-BD')}</small></div><div><span class="badge badge-${w.st}">${w.st}</span>${w.st==='pending'?`<button class="btn btn-s btn-sm" onclick="aW(${i})">✅ Approve</button>`:''}</div></div>`;});document.getElementById('wl').innerHTML=h||'<p>No requests</p>';}
+        function aW(i){const w=gW();if(w[i]&&w[i].st==='pending'){w[i].st='approved';localStorage.setItem(K+'withdrawals',JSON.stringify(w));const uk=K+'user_'+w[i].uid;const u=JSON.parse(localStorage.getItem(uk));if(u&&u.tx){const tx=u.tx.find(t=>t.st==='pending'&&t.ty==='debit'&&t.am===w[i].am);if(tx){tx.st='approved';localStorage.setItem(uk,JSON.stringify(u));}}alert('✅ Approved!');rW();rD();}}
+
+        function sBC(){const m=document.getElementById('bm').value.trim();if(!m)return alert('Message!');S.ms.push({text:m,date:new Date().toISOString()});pS();document.getElementById('bm').value='';alert('✅ Sent!');rM();}
+        function rM(){let h='';S.ms.slice().reverse().forEach(m=>{h+=`<div class="card"><p>${m.text}</p><small>${new Date(m.date).toLocaleString('bn-BD')}</small></div>`;});document.getElementById('mh').innerHTML=h||'<p>No messages</p>';}
+
+        S=gS();RF();uP();document.getElementById('bi').addEventListener('input',uP);document.getElementById('ni').addEventListener('input',uP);setInterval(RF,12000);
+    </script>
+</body>
+</html>
