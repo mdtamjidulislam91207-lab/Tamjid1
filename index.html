@@ -1,250 +1,2889 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>💸 Trusted Online Earning</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Tonur - Earn & Grow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        :root{--p:#0984e3;--s:#74b9ff;--bg:#e8f4f8;--card:#fff;--txt:#2D3436;--t2:#636E72;--bdr:#ddd;--su:#00B894;--da:#FF7675;--r:20px;--rs:14px;}
-        *{margin:0;padding:0;box-sizing:border-box;}
-        html,body{width:100%;height:100%;font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);-webkit-tap-highlight-color:transparent;}
-        .app{max-width:480px;margin:0 auto;background:var(--bg);min-height:100vh;}
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        .auth-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at bottom,#1b2735,#090a0f);display:flex;align-items:center;justify-content:center;z-index:1000;}
-        .auth-box{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:24px;padding:35px 28px;width:90%;max-width:400px;}
-        .auth-logo{text-align:center;font-size:50px;margin-bottom:8px;}
-        .auth-title{font-size:20px;font-weight:800;text-align:center;background:linear-gradient(135deg,#FDCB6E,#FD79A8,#74b9ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-        .auth-subtitle{text-align:center;font-size:12px;color:#aaa;margin-bottom:18px;}
-        .auth-input{width:100%;padding:14px 16px;border:2px solid rgba(255,255,255,0.15);border-radius:12px;font-size:15px;margin-bottom:10px;background:rgba(255,255,255,0.05);color:white;outline:none;-webkit-appearance:none;}
-        .auth-input:focus{border-color:var(--p);}
-        .auth-btn{width:100%;padding:15px;border:none;border-radius:25px;font-weight:700;font-size:15px;cursor:pointer;text-transform:uppercase;margin-top:10px;background:linear-gradient(135deg,#6C5CE7,#A29BFE);color:white;}
-        .auth-link{text-align:center;margin-top:15px;font-size:13px;color:#aaa;cursor:pointer;}.auth-link b{color:#74b9ff;}
-        .auth-error{background:rgba(255,118,117,0.2);color:#FF7675;padding:10px;border-radius:8px;font-size:12px;text-align:center;margin-bottom:10px;display:none;}
-        .gender-select{display:flex;gap:10px;margin-bottom:10px;}
-        .gender-opt{flex:1;padding:12px;border:2px solid rgba(255,255,255,0.15);border-radius:12px;text-align:center;cursor:pointer;font-weight:600;background:rgba(255,255,255,0.03);color:#aaa;}
-        .gender-opt.sel{border-color:#6C5CE7;background:rgba(108,92,231,0.15);color:white;}
+        :root {
+            --primary: #2a7de1;
+            --primary-dark: #1a5fb4;
+            --primary-light: #e8f0fe;
+            --gold: #f5b342;
+            --gold-light: #fff3e0;
+            --green: #2ecc71;
+            --green-light: #e8f8f0;
+            --red: #e74c3c;
+            --red-light: #fde8e8;
+            --bg: #f5f7fa;
+            --card: #ffffff;
+            --text: #1a1a2e;
+            --text-secondary: #5a5a7a;
+            --text-light: #8a8aaa;
+            --border: #e8ecf1;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.10);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --nav-height: 70px;
+            --header-height: 60px;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --transition: 0.25s ease;
+        }
 
-        .header{background:linear-gradient(135deg,#0984e3,#74b9ff);color:white;padding:14px 18px;position:sticky;top:0;z-index:99;}
-        .ht{display:flex;align-items:center;justify-content:space-between;}
-        .ps{display:flex;align-items:center;gap:10px;}.pa{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FDCB6E,#FD79A8);display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:17px;border:2px solid rgba(255,255,255,0.5);}
-        .pn{font-weight:700;font-size:14px;}.pi{font-size:9px;opacity:0.8;}.ha{display:flex;align-items:center;gap:6px;}
-        .ib{background:rgba(255,255,255,0.2);border:none;color:white;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;}
-        .admin-pass{display:flex;align-items:center;gap:3px;}
-        .admin-pass input{width:50px;padding:3px 4px;border:1px solid rgba(255,255,255,0.4);border-radius:8px;background:rgba(255,255,255,0.15);color:white;font-size:10px;text-align:center;outline:none;-webkit-appearance:none;}
-        .admin-pass button{background:rgba(255,255,255,0.2);border:none;color:white;width:18px;height:18px;border-radius:50%;cursor:pointer;font-size:8px;}
+        html, body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100%;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        .mc{padding:14px;padding-bottom:80px;}.pg{display:none;}.pg.ac{display:block;}
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-        .wallet{background:linear-gradient(135deg,#1a1a3e,#16213e,#0f3460);border-radius:22px;padding:28px 22px;margin-bottom:15px;color:white;position:relative;overflow:hidden;box-shadow:0 10px 40px rgba(15,52,96,0.5);}
-        .snow{position:absolute;color:white;font-size:14px;animation:snowFall linear infinite;z-index:1;opacity:0.5;}
-        @keyframes snowFall{0%{transform:translateY(-30px)}100%{transform:translateY(250px)}}
-        .wc{position:relative;z-index:3;}.wh{display:flex;justify-content:space-between;margin-bottom:15px;}
-        .wl{font-size:12px;opacity:0.8;text-transform:uppercase;}
-        .vb{background:linear-gradient(135deg,#FDCB6E,#F39C12);color:#1a1a3e;padding:5px 12px;border-radius:15px;font-size:10px;font-weight:bold;}
-        .ba{font-size:48px;font-weight:900;}.as{font-size:11px;margin-top:8px;padding:4px 10px;border-radius:12px;display:inline-block;font-weight:600;}
-        .ay{background:rgba(0,184,148,0.3);color:#00B894;}.an{background:rgba(253,203,110,0.3);color:#FDCB6E;}
+        #app {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,0,0,0.05);
+        }
 
-        .sg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:15px;}
-        .sc{background:var(--card);border-radius:var(--rs);padding:18px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
-        .si{font-size:28px;}.sv{font-size:24px;font-weight:800;color:var(--p);}.sl{font-size:10px;color:var(--t2);}
+        /* ===== HEADER ===== */
+        .app-header {
+            background: var(--card);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            min-height: var(--header-height);
+            position: relative;
+            z-index: 10;
+        }
+        .app-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--text);
+        }
+        .app-header .logo .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 800;
+            box-shadow: 0 4px 10px rgba(42,125,225,0.3);
+        }
+        .app-header .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .app-header .header-actions .badge-icon {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .app-header .header-actions .badge-icon:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+        .app-header .header-actions .badge-icon .dot {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 8px;
+            height: 8px;
+            background: var(--red);
+            border-radius: 50%;
+            border: 2px solid var(--card);
+        }
+        /* Hidden admin trigger - completely invisible */
+        .admin-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 60px;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 5;
+            background: transparent;
+            border: none;
+        }
 
-        /* ===== 7 DAY SPIN WHEEL ===== */
-        .spin-wheel-section{background:var(--card);border-radius:var(--r);padding:20px;margin-bottom:15px;box-shadow:0 2px 10px rgba(0,0,0,0.05);text-align:center;}
-        .spin-title{font-weight:800;font-size:16px;margin-bottom:12px;color:var(--p);}
-        .day-tracker{display:flex;justify-content:space-between;margin-bottom:15px;gap:4px;}
-        .day-dot{width:30px;height:30px;border-radius:50%;background:#ddd;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;color:#999;transition:all 0.3s;}
-        .day-dot.done{background:var(--su);color:white;}
-        .day-dot.today{background:var(--p);color:white;animation:pulse 1s infinite;box-shadow:0 0 15px rgba(9,132,227,0.5);}
-        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-        .day-dot .day-reward{font-size:7px;margin-top:-2px;}
-        .spin-btn{background:linear-gradient(135deg,#FDCB6E,#F39C12);color:#1a1a3e;border:none;padding:14px 30px;border-radius:25px;font-weight:900;font-size:16px;cursor:pointer;width:100%;text-transform:uppercase;letter-spacing:1px;box-shadow:0 6px 20px rgba(253,203,110,0.4);}
-        .spin-btn:active{transform:scale(0.95);}
-        .spin-btn:disabled{background:#B2BEC3;box-shadow:none;}
-        .spin-result{font-size:24px;font-weight:900;color:var(--su);margin-top:10px;animation:popIn 0.5s ease;}
-        @keyframes popIn{0%{transform:scale(0)}100%{transform:scale(1)}}
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 16px 16px 100px;
+            scroll-behavior: smooth;
+        }
+        .page { display: none; animation: fadeUp 0.35s ease; }
+        .page.active { display: block; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        .timer-box{background:var(--card);border-radius:var(--r);padding:18px;margin-bottom:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);border:2px solid var(--p);}
-        .timer-clock{font-size:36px;font-weight:900;color:var(--p);font-family:'Courier New',monospace;}
+        /* ===== BALANCE CARD ===== */
+        .balance-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: var(--radius);
+            padding: 24px 22px 22px;
+            color: #fff;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(26,26,46,0.25);
+        }
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -60%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(42,125,225,0.15);
+            pointer-events: none;
+        }
+        .balance-card::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -10%;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: rgba(245,179,66,0.08);
+            pointer-events: none;
+        }
+        .balance-card .balance-label {
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0.7;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+            z-index: 1;
+        }
+        .balance-card .balance-amount {
+            font-size: 38px;
+            font-weight: 800;
+            margin: 4px 0 2px;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+        .balance-card .balance-amount .currency {
+            font-size: 20px;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+        .balance-card .balance-usdt {
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+            margin-top: 2px;
+        }
+        .balance-card .balance-usdt span { font-weight: 700; color: var(--gold); }
+        .balance-card .balance-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .balance-card .balance-actions .btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            border: none;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .balance-card .balance-actions .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+        .balance-card .balance-actions .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: scale(0.98);
+        }
+        .balance-card .balance-actions .btn-outline {
+            background: rgba(255,255,255,0.10);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .balance-card .balance-actions .btn-outline:hover {
+            background: rgba(255,255,255,0.18);
+        }
 
-        .bonus-card{background:linear-gradient(135deg,#00B894,#55EFC4);border-radius:var(--r);padding:18px;margin-bottom:12px;color:white;text-align:center;}
-        .bonus-card.done{background:linear-gradient(135deg,#B2BEC3,#636E72);}
-        .bonus-card h3{font-size:18px;margin-bottom:6px;}.bonus-amount{font-size:28px;font-weight:900;}
+        /* ===== USER PROFILE CARD ===== */
+        .user-profile-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 16px 18px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+        .user-profile-card .user-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid var(--primary-light);
+            background: var(--bg);
+        }
+        .user-profile-card .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .user-profile-card .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .user-profile-card .user-info .user-name {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text);
+        }
+        .user-profile-card .user-info .user-id {
+            font-size: 12px;
+            color: var(--text-light);
+            font-family: monospace;
+            letter-spacing: 0.5px;
+        }
+        .user-profile-card .user-info .user-refs {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
 
-        .cs{background:var(--card);border-radius:var(--r);padding:18px;margin-bottom:15px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
-        .ct{font-weight:700;font-size:15px;margin-bottom:12px;text-align:center;}
-        .cr{display:flex;justify-content:space-around;align-items:flex-end;gap:6px;padding:10px 0;min-height:120px;}
-        .ci{display:flex;flex-direction:column;align-items:center;gap:4px;}
-        .cb{width:26px;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#0984e3,#74b9ff);position:relative;min-height:4px;}
-        .cb .fl{width:9px;height:11px;background:radial-gradient(circle,#FFD700,#FF8C00);border-radius:50%;position:absolute;top:-9px;left:50%;transform:translateX(-50%);animation:fk 0.3s infinite alternate;}
-        @keyframes fk{0%{transform:translateX(-50%) scale(1,1)}100%{transform:translateX(-50%) scale(0.7,1.3)}}
-        .cd{font-size:10px;color:var(--t2);}.ca{font-size:9px;color:var(--su);font-weight:700;}
+        /* ===== SECTION TITLES ===== */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 22px 0 12px;
+        }
+        .section-header h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .section-header .see-all {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .section-header .see-all:hover { opacity: 0.7; }
 
-        .adc{background:linear-gradient(180deg,#0a0a2e,#1a1a4e,#0d0d35);border-radius:var(--r);padding:6px;margin-bottom:14px;cursor:pointer;box-shadow:0 6px 25px rgba(30,60,180,0.35);min-height:170px;display:flex;align-items:center;justify-content:center;}
-        .adi{text-align:center;color:white;}.adi .aic{font-size:50px;}.adi .at{font-size:22px;font-weight:900;}
-        .adi .ar{display:inline-block;background:linear-gradient(135deg,#FFD700,#FFA500);color:#1a1a2e;padding:8px 20px;border-radius:22px;margin-top:10px;font-weight:800;font-size:15px;}
+        /* ===== TASK ITEMS ===== */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .task-item {
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+        .task-item:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-hover);
+        }
+        .task-item .task-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .task-item .task-info { flex: 1; min-width: 0; }
+        .task-item .task-info .task-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text);
+        }
+        .task-item .task-info .task-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .task-item .task-info .task-desc .reward {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        .task-item .task-status {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            flex-shrink: 0;
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .task-item .task-status.completed {
+            background: var(--green-light);
+            color: var(--green);
+        }
 
-        .tk{background:var(--card);border-radius:var(--r);padding:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05);border-left:4px solid var(--p);}
-        .th{display:flex;justify-content:space-between;margin-bottom:6px;}.tt{font-weight:700;font-size:14px;}
-        .tr{background:linear-gradient(135deg,var(--p),var(--s));color:white;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:bold;}
+        /* ===== SINGLE AD CARD WITH RAIN & LIGHTNING ===== */
+        .ad-single {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        .ad-single:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+        }
+        .ad-single .ad-image {
+            width: 100%;
+            height: 170px;
+            background: linear-gradient(135deg, #1a3a6a, #0a1a3a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 48px;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Rain drops */
+        .rain-drop {
+            position: absolute;
+            width: 2px;
+            background: rgba(173, 216, 230, 0.6);
+            animation: rainFall linear infinite;
+            z-index: 1;
+        }
+        @keyframes rainFall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(180px) rotate(0deg); opacity: 0.2; }
+        }
+        /* Lightning flash */
+        .lightning-flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            z-index: 2;
+            opacity: 0;
+            pointer-events: none;
+            animation: lightningFlash 3s infinite;
+        }
+        @keyframes lightningFlash {
+            0%, 90%, 100% { opacity: 0; }
+            92% { opacity: 0.8; }
+            94% { opacity: 0; }
+            96% { opacity: 0.9; }
+            97% { opacity: 0; }
+        }
+        .ad-single .ad-image .ad-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            z-index: 5;
+        }
+        .ad-single .ad-image .ad-title-animation {
+            position: relative;
+            z-index: 3;
+            font-size: 28px;
+            font-weight: 800;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            animation: titleGlow 2s ease-in-out infinite alternate;
+            letter-spacing: 2px;
+        }
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 10px rgba(255,255,255,0.2); transform: scale(1); }
+            100% { text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(42,125,225,0.5); transform: scale(1.05); }
+        }
+        .ad-single .ad-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 0;
+        }
+        .ad-single .ad-body {
+            padding: 16px 18px 18px;
+            position: relative;
+            z-index: 5;
+        }
+        .ad-single .ad-body .ad-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .ad-single .ad-body .ad-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 4px 0 8px;
+        }
+        .ad-single .ad-body .ad-reward {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .ad-single .ad-body .ad-limit {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+        .ad-single .ad-body .ad-portal {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .ad-single .ad-body .ad-portal span {
+            background: var(--bg);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        .ad-single .ad-body .ad-action {
+            margin-top: 14px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+        .ad-single .ad-body .ad-action:hover {
+            background: var(--primary-dark);
+        }
+        .ad-single .ad-body .ad-action:disabled {
+            background: var(--border);
+            color: var(--text-light);
+            cursor: not-allowed;
+        }
 
-        .btn{border:none;padding:12px 20px;border-radius:20px;cursor:pointer;font-weight:700;font-size:13px;width:100%;text-transform:uppercase;}
-        .btn-p{background:linear-gradient(135deg,var(--p),var(--s));color:white;}.btn-p:disabled{background:#B2BEC3;}
+        /* ===== DAILY BONUS ===== */
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            background: var(--card);
+            padding: 14px 10px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .bonus-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 4px;
+            border-radius: 8px;
+            background: var(--bg);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        .bonus-day .day-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        .bonus-day .day-reward {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .bonus-day .day-status {
+            font-size: 9px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: var(--border);
+            color: var(--text-light);
+        }
+        .bonus-day.claimed .day-status {
+            background: var(--green-light);
+            color: var(--green);
+        }
+        .bonus-day.available .day-status {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .bonus-day.locked .day-status {
+            background: var(--border);
+            color: var(--text-light);
+        }
+        .bonus-day.available {
+            background: var(--primary-light);
+            border: 2px solid var(--primary);
+        }
 
-        .wdw{background:linear-gradient(180deg,#0c2461,#1e3799,#4a69bd);border-radius:20px;margin-bottom:10px;overflow:hidden;}
-        .wdc{padding:25px 20px;}.wdt{color:white;font-size:20px;font-weight:800;text-align:center;margin-bottom:20px;}
-        .pmw{display:flex;gap:12px;margin-bottom:20px;}
-        .pcw{flex:1;padding:18px 12px;border:2px solid rgba(255,255,255,0.3);border-radius:14px;text-align:center;cursor:pointer;background:rgba(255,255,255,0.1);}
-        .pcw.sel{border-color:#FFD700;background:rgba(255,215,0,0.15);}.pcw img{width:50px;height:50px;object-fit:contain;border-radius:8px;margin-bottom:6px;}
-        .inw{width:100%;padding:15px 18px;border:2px solid rgba(255,255,255,0.3);border-radius:12px;font-size:16px;background:rgba(255,255,255,0.15);color:white;margin-bottom:12px;outline:none;-webkit-appearance:none;}
-        .inw:focus{border-color:#FFD700;}.ifw{padding:12px;border-radius:10px;margin:10px 0;background:rgba(255,255,255,0.15);color:white;font-size:12px;text-align:center;}
-        .btw{border:none;padding:15px 20px;border-radius:25px;cursor:pointer;font-weight:800;font-size:15px;width:100%;background:linear-gradient(135deg,#FFD700,#FFA500);color:#1a1a2e;}
+        /* ===== REFERRAL ===== */
+        .referral-box {
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            padding: 18px 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .referral-box .ref-code {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg);
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .referral-box .ref-code code {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text);
+        }
+        .referral-box .ref-code .copy-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .referral-box .ref-code .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+        .referral-box .ref-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .referral-box .ref-stats .stat { flex: 1; }
+        .referral-box .ref-stats .stat .num {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text);
+        }
+        .referral-box .ref-stats .stat .label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
 
-        .bn{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:white;display:flex;justify-content:space-around;padding:6px 3px;box-shadow:0 -3px 15px rgba(0,0,0,0.06);z-index:998;border-radius:18px 18px 0 0;}
-        .ni{text-align:center;color:#B2BEC3;cursor:pointer;padding:6px;font-size:9px;font-weight:600;border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;}
-        .ni.ac{color:var(--p);}.ni i{font-size:20px;}
+        /* ===== WITHDRAW ===== */
+        .withdraw-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 20px 18px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .withdraw-section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .withdraw-section .sub {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        .withdraw-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .withdraw-method {
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            padding: 14px 8px;
+            text-align: center;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .withdraw-method:hover {
+            border-color: var(--primary);
+        }
+        .withdraw-method .wm-icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .withdraw-method .wm-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .withdraw-method .wm-min {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+        .withdraw-method.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .withdraw-section .form-group {
+            margin-bottom: 14px;
+        }
+        .withdraw-section .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .withdraw-section .form-group input,
+        .withdraw-section .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+        }
+        .withdraw-section .form-group input:focus,
+        .withdraw-section .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42,125,225,0.10);
+        }
+        .withdraw-section .admin-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--primary);
+            color: #fff;
+        }
+        .withdraw-section .admin-btn:hover {
+            background: var(--primary-dark);
+        }
+        .withdraw-section .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .withdraw-section .info-row:last-child {
+            border-bottom: none;
+        }
+        .withdraw-section .info-row .label { color: var(--text-secondary); }
+        .withdraw-section .info-row .value { font-weight: 600; }
 
-        .admin-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a1a;z-index:10001;overflow-y:auto;display:none;color:#e0e0e0;}
-        .admin-overlay.show{display:block;}
-        .admin-hdr{background:#e74c3c;padding:18px;display:flex;justify-content:space-between;align-items:center;}
-        .admin-close{background:rgba(255,255,255,0.2);border:none;color:white;width:32px;height:32px;border-radius:50%;cursor:pointer;}
-        .admin-sec{background:#151530;padding:12px;border-radius:10px;margin:10px;}.admin-sec h4{color:#0984e3;margin-bottom:8px;}
-        .admin-inp{width:100%;padding:7px 10px;background:#0a0a1a;border:1px solid #252550;border-radius:5px;color:white;font-size:12px;margin-bottom:6px;}
-        textarea.admin-inp{min-height:50px;resize:vertical;}
-        .admin-btn{padding:6px 14px;border:none;border-radius:12px;cursor:pointer;font-weight:700;font-size:10px;margin:2px;color:white;}
-        .a-blue{background:#0984e3;}.a-green{background:#00B894;}.a-red{background:#FF7675;}.a-yellow{background:#FDCB6E;color:#1a1a1a;}
-        .admin-tbl{width:100%;border-collapse:collapse;font-size:10px;margin-top:6px;}
-        .admin-tbl th,.admin-tbl td{padding:4px 6px;border-bottom:1px solid #252550;}.admin-tbl th{background:#0a0a1a;}
+        /* ===== LEADERBOARD ===== */
+        .leaderboard-list {
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .leaderboard-item:last-child { border-bottom: none; }
+        .leaderboard-item .rank {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-light);
+            width: 30px;
+            text-align: center;
+        }
+        .leaderboard-item .rank.gold { color: var(--gold); }
+        .leaderboard-item .rank.silver { color: #b0b0b0; }
+        .leaderboard-item .rank.bronze { color: #cd7f32; }
+        .leaderboard-item .lb-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .leaderboard-item .lb-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .leaderboard-item .lb-info { flex: 1; min-width: 0; }
+        .leaderboard-item .lb-info .lb-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .leaderboard-item .lb-info .lb-score {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .leaderboard-item .lb-reward {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 14px;
+        }
+
+        /* ===== SUPPORT CARD ===== */
+        .support-card {
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .support-card .support-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .support-card .support-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 28px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .support-card .support-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 6px 0 calc(6px + var(--safe-bottom));
+            height: var(--nav-height);
+            z-index: 20;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.04);
+        }
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 4px 12px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            position: relative;
+            min-width: 56px;
+        }
+        .bottom-nav .nav-item i {
+            font-size: 20px;
+            transition: var(--transition);
+        }
+        .bottom-nav .nav-item span { font-size: 10px; }
+        .bottom-nav .nav-item.active {
+            color: var(--primary);
+        }
+        .bottom-nav .nav-item.active i {
+            transform: translateY(-2px);
+        }
+        .bottom-nav .nav-item .nav-badge {
+            position: absolute;
+            top: 0;
+            right: 4px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--red);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== ADMIN PANEL ===== */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .admin-panel.open { display: flex; }
+        .admin-panel .admin-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px 20px 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeUp 0.3s ease;
+        }
+        .admin-panel .admin-box .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .admin-panel .admin-box .admin-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text);
+        }
+        .admin-panel .admin-box .admin-header .close-admin {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 4px;
+            transition: var(--transition);
+        }
+        .admin-panel .admin-box .admin-header .close-admin:hover {
+            color: var(--red);
+            transform: rotate(90deg);
+        }
+        .admin-panel .admin-box .admin-section {
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+        .admin-panel .admin-box .admin-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .admin-panel .admin-box .admin-section h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .admin-panel .admin-box .form-group {
+            margin-bottom: 12px;
+        }
+        .admin-panel .admin-box .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .admin-panel .admin-box .form-group input,
+        .admin-panel .admin-box .form-group select,
+        .admin-panel .admin-box .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+        }
+        .admin-panel .admin-box .form-group input:focus,
+        .admin-panel .admin-box .form-group select:focus,
+        .admin-panel .admin-box .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42,125,225,0.10);
+        }
+        .admin-panel .admin-box .admin-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--primary);
+            color: #fff;
+            width: 100%;
+        }
+        .admin-panel .admin-box .admin-btn:hover {
+            background: var(--primary-dark);
+        }
+        .admin-panel .admin-box .admin-btn.danger {
+            background: var(--red);
+        }
+        .admin-panel .admin-box .admin-btn.danger:hover {
+            background: #c0392b;
+        }
+        .admin-panel .admin-box .admin-btn.small {
+            width: auto;
+            padding: 6px 14px;
+            font-size: 12px;
+        }
+        .admin-panel .admin-box .admin-list {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 8px;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+        .admin-panel .admin-box .admin-list .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+        .admin-panel .admin-box .admin-list .list-item:last-child {
+            border-bottom: none;
+        }
+        .admin-panel .admin-box .admin-list .list-item .del-btn {
+            background: var(--red);
+            color: #fff;
+            border: none;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .admin-panel .admin-box .admin-list .list-item .del-btn:hover {
+            opacity: 0.8;
+        }
+        .admin-panel .admin-box .admin-list .list-item .approve-btn {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .admin-panel .admin-box .admin-list .list-item .approve-btn:hover {
+            opacity: 0.8;
+        }
+        .admin-panel .admin-box .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .admin-panel .admin-box .row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+        .admin-panel .admin-box .row-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 6px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--text);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            max-width: 90%;
+            text-align: center;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.success { background: var(--green); }
+        .toast.error { background: var(--red); }
+        .toast.warning { background: var(--gold); color: var(--text); }
+
+        /* ===== MODALS ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-overlay .modal-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            max-width: 420px;
+            width: 100%;
+            padding: 24px 20px 20px;
+            animation: fadeUp 0.3s ease;
+            text-align: center;
+        }
+        .modal-overlay .modal-box .modal-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .modal-overlay .modal-box h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .modal-overlay .modal-box p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        .modal-overlay .modal-box .modal-btn {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--primary);
+            color: #fff;
+        }
+        .modal-overlay .modal-box .modal-btn:hover {
+            background: var(--primary-dark);
+        }
+        .modal-overlay .modal-box .mailbox-item {
+            text-align: left;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .modal-overlay .modal-box .mailbox-item:last-child {
+            border-bottom: none;
+        }
+        .modal-overlay .modal-box .mailbox-item .mail-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .modal-overlay .modal-box .mailbox-item .mail-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .modal-overlay .modal-box .mailbox-item .mail-time {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        /* ===== ADMIN PASSWORD PROMPT (NO "ADMIN" TEXT) ===== */
+        .admin-password-prompt {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .admin-password-prompt.open { display: flex; }
+        .admin-password-prompt .prompt-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 28px 24px 24px;
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+            animation: fadeUp 0.3s ease;
+        }
+        .admin-password-prompt .prompt-box .prompt-icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .admin-password-prompt .prompt-box h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+        .admin-password-prompt .prompt-box p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        .admin-password-prompt .prompt-box input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 4px;
+            font-weight: 600;
+            background: var(--bg);
+            margin-bottom: 12px;
+        }
+        .admin-password-prompt .prompt-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .admin-password-prompt .prompt-box .prompt-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .admin-password-prompt .prompt-box .prompt-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .admin-password-prompt .prompt-box .prompt-actions .btn-confirm {
+            background: var(--primary);
+            color: #fff;
+        }
+        .admin-password-prompt .prompt-box .prompt-actions .btn-confirm:hover {
+            background: var(--primary-dark);
+        }
+        .admin-password-prompt .prompt-box .prompt-actions .btn-cancel {
+            background: var(--bg);
+            color: var(--text-secondary);
+        }
+        .admin-password-prompt .prompt-box .prompt-actions .btn-cancel:hover {
+            background: var(--border);
+        }
+
+        /* ===== UTILITY ===== */
+        .text-gold { color: var(--gold); }
+        .text-green { color: var(--green); }
+        .text-red { color: var(--red); }
+        .text-primary { color: var(--primary); }
+        .text-muted { color: var(--text-light); }
+        .fw-700 { font-weight: 700; }
+        .mt-8 { margin-top: 8px; }
+        .mt-12 { margin-top: 12px; }
+        .mt-16 { margin-top: 16px; }
+        .mb-8 { margin-bottom: 8px; }
+        .gap-6 { gap: 6px; }
+        .flex { display: flex; }
+        .flex-center { display: flex; align-items: center; justify-content: center; }
+        .flex-between { display: flex; align-items: center; justify-content: space-between; }
+        .empty-state {
+            text-align: center;
+            padding: 30px 10px;
+            color: var(--text-secondary);
+        }
+        .empty-state i {
+            font-size: 48px;
+            color: var(--border);
+            margin-bottom: 12px;
+            display: block;
+        }
+        .empty-state h4 {
+            font-size: 16px;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .empty-state p { font-size: 13px; }
+
+        @media (max-width: 400px) {
+            .balance-card .balance-amount { font-size: 30px; }
+            .bonus-grid { gap: 4px; padding: 10px 6px; }
+            .bonus-day { padding: 6px 2px; }
+            .bonus-day .day-label { font-size: 8px; }
+            .bonus-day .day-reward { font-size: 9px; }
+            .withdraw-methods { gap: 6px; }
+            .admin-panel .admin-box .row-2 { grid-template-columns: 1fr; }
+            .admin-panel .admin-box .row-3 { grid-template-columns: 1fr 1fr; }
+            .admin-panel .admin-box .row-4 { grid-template-columns: 1fr 1fr; }
+            .ad-single .ad-image { height: 140px; }
+            .user-profile-card .user-avatar { width: 44px; height: 44px; }
+        }
+        @media (min-width: 481px) {
+            #app {
+                border-radius: 20px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                height: calc(100% - 40px);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="app" id="app">
-        <div id="authScreen" class="auth-screen"><div class="auth-box" id="authBox"></div></div>
-        <div id="mainApp" style="display:none;">
-            <div class="header"><div class="ht"><div class="ps"><div class="pa" id="pa">👤</div><div><div class="pn" id="pn">User</div><div class="pi" id="pi">ID: ---</div></div></div><div class="ha"><button class="ib" onclick="sp('inbox')"><i class="fas fa-envelope"></i></button><button class="ib" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button><div class="admin-pass"><input type="password" id="adminPassInput" placeholder="...." autocomplete="off"><button onclick="checkAdminPass()">→</button></div></div></div></div>
-            <div class="mc" id="sc">
-                <div class="pg ac" id="homePage">
-                    <div class="wallet" id="walletBox"></div>
-                    <div class="sg"><div class="sc"><div class="si">👥</div><div class="sv" id="rc">0</div><div class="sl">Referrals</div></div><div class="sc"><div class="si">✅</div><div class="sv" id="tc">0</div><div class="sl">Tasks</div></div><div class="sc"><div class="si">👆</div><div class="sv" id="toc">0</div><div class="sl">Touches</div></div><div class="sc"><div class="si">🎁</div><div class="sv" id="bc">0</div><div class="sl">Bonuses</div></div></div>
-                    <!-- 7 DAY SPIN WHEEL -->
-                    <div class="spin-wheel-section" id="spinWheelSection">
-                        <div class="spin-title">🎰 7 Day Lucky Spin</div>
-                        <div class="day-tracker" id="dayTracker"></div>
-                        <button class="spin-btn" id="spinBtn" onclick="doSpin()">🎰 SPIN NOW</button>
-                        <div class="spin-result" id="spinResult"></div>
-                    </div>
-                    <div class="timer-box"><div class="timer-title">⏱️ Next Bonus</div><div class="timer-clock" id="timerClock">00:00:00</div></div>
-                    <div id="dailyBonusContainer"></div>
-                    <div id="specialBonusContainer"></div>
-                    <div class="cs"><div class="ct" id="cwt">Week</div><div class="cr" id="cr"></div><div class="csm" id="csm"></div></div>
-                </div>
-                <div class="pg" id="taskPage"><h3 style="margin-bottom:12px;">📋 Tasks</h3><div class="adc" onclick="startAd()" id="adc"></div><div class="tk"><div class="th"><span class="tt">👆 One Click Earn</span><span class="tr">+<span id="crw">1</span> Tk</span></div><button class="btn btn-p" id="ctb" onclick="startAd()">Click to Earn</button><p style="text-align:center;margin-top:6px;font-size:11px;">Today: <b id="ccd">0</b>/<b id="cld">10</b> | <span id="cdText" style="color:#FF7675;"></span></p></div><h3 style="margin:15px 0 10px;">🔗 Joining Tasks</h3><div id="jtc"></div></div>
-                <div class="pg" id="supportPage"><h3 style="margin-bottom:12px;">🆘 Support</h3><div class="tk"><video controls style="width:100%;border-radius:10px;margin:10px 0;" poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect fill='%230984e3' width='400' height='200'/%3E%3Ctext fill='white' x='50%25' y='50%25' text-anchor='middle' font-size='18'%3E📹%3C/text%3E%3C/svg%3E"><source src="#" type="video/mp4"></video></div><button class="btn btn-p" onclick="window.open('https://t.me/pocketmoney_support')">💬 Telegram Support</button></div>
-                <div class="pg" id="referralPage"><h3 style="margin-bottom:12px;">🔗 Referral</h3><div class="tk"><div class="th"><span class="tt" id="rft">Invite Friends</span><span class="tr">+<span id="rfr">5</span> Tk</span></div><div style="background:var(--bg);padding:12px;border-radius:10px;margin:8px 0;"><input type="text" class="inw" id="rli" readonly style="color:var(--txt);background:white;border-color:var(--bdr);"></div><button class="btn btn-p" onclick="crl()">📋 Copy</button></div></div>
-                <div class="pg" id="walletPage"><h3 style="margin-bottom:12px;">💳 Wallet</h3><div id="wsc"></div><div class="tk" style="margin-top:10px;"><div class="th"><span class="tt">📄 Transactions</span></div><div id="txh" style="max-height:200px;overflow-y:auto;"></div></div></div>
-                <div class="pg" id="inboxPage"><h3 style="margin-bottom:12px;">📨 Inbox</h3><button class="btn btn-p" style="margin-bottom:10px;background:transparent;border:2px solid var(--p);color:var(--p);" onclick="sp('home')">⬅ Home</button><div id="ims"></div></div>
-            </div>
-            <div class="bn"><button class="ni ac" onclick="sp('home')"><i class="fas fa-home"></i><span>Home</span></button><button class="ni" onclick="sp('task')"><i class="fas fa-tasks"></i><span>Tasks</span></button><button class="ni" onclick="sp('support')"><i class="fas fa-headset"></i><span>Support</span></button><button class="ni" onclick="sp('referral')"><i class="fas fa-users"></i><span>Refer</span></button><button class="ni" onclick="sp('wallet')"><i class="fas fa-wallet"></i><span>Wallet</span></button></div>
+
+<div id="app">
+
+    <!-- ===== HEADER ===== -->
+    <header class="app-header">
+        <div class="logo">
+            <div class="logo-icon">T</div>
+            <span>Tonur</span>
         </div>
-        <div class="admin-overlay" id="adminOverlay"><div class="admin-hdr"><h2>⚙️ Admin Panel</h2><button class="admin-close" onclick="closeAdmin()">✕</button></div><div id="adminContent" style="padding:10px;"></div></div>
+        <div class="header-actions">
+            <div class="badge-icon" onclick="openMailbox()" title="Mailbox">
+                <i class="fas fa-envelope"></i>
+                <span class="dot" id="mailDot" style="display:none;"></span>
+            </div>
+            <div class="badge-icon" onclick="openSupport()" title="Support">
+                <i class="fas fa-headset"></i>
+            </div>
+            <!-- Hidden admin trigger - tap empty area top-left -->
+            <button class="admin-trigger" onclick="triggerAdminPrompt()" title="Admin"></button>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-content" id="mainContent">
+
+        <!-- PAGE: HOME -->
+        <div class="page active" id="page-home">
+            <!-- User Profile -->
+            <div class="user-profile-card" id="userProfileCard">
+                <div class="user-avatar" id="userAvatar">
+                    <img id="userAvatarImg" src="https://i.pravatar.cc/150?img=1" alt="avatar" />
+                </div>
+                <div class="user-info">
+                    <div class="user-name" id="userDisplayName">User</div>
+                    <div class="user-id" id="userDisplayId">ID: loading...</div>
+                    <div class="user-refs" id="userDisplayRefs">Referrals: 0</div>
+                </div>
+            </div>
+
+            <!-- Balance -->
+            <div class="balance-card">
+                <div class="balance-label"><i class="fas fa-coins"></i> Tonur Balance</div>
+                <div class="balance-amount">
+                    <span id="tonurBalance">0.00000</span>
+                    <span class="currency">TRX</span>
+                </div>
+                <div class="balance-usdt">≈ <span id="usdtBalance">0.00</span> USDT</div>
+                <div class="balance-actions">
+                    <button class="btn btn-primary" onclick="navigateTo('withdraw')">
+                        <i class="fas fa-arrow-up"></i> Withdraw
+                    </button>
+                    <button class="btn btn-outline" onclick="navigateTo('tasks')">
+                        <i class="fas fa-tasks"></i> Earn
+                    </button>
+                </div>
+            </div>
+
+            <!-- Daily Bonus -->
+            <div class="section-header">
+                <h3><i class="fas fa-calendar-day text-gold"></i> Daily Bonus</h3>
+                <span class="see-all" onclick="navigateTo('profile')">View All</span>
+            </div>
+            <div class="bonus-grid" id="bonusGrid"></div>
+
+            <!-- Quick Tasks -->
+            <div class="section-header">
+                <h3><i class="fas fa-list-check text-primary"></i> Quick Tasks</h3>
+                <span class="see-all" onclick="navigateTo('tasks')">See All</span>
+            </div>
+            <div class="task-list" id="homeTaskList"></div>
+
+            <!-- Single Ad with Rain & Lightning -->
+            <div class="section-header">
+                <h3><i class="fas fa-play-circle text-primary"></i> Watch Ad</h3>
+            </div>
+            <div class="ad-single" id="homeAdSingle" onclick="watchAd()">
+                <div class="ad-image" id="adImageDisplay">
+                    <div class="lightning-flash"></div>
+                    <div class="ad-title-animation" id="adImageText">Tonur Ad</div>
+                    <span class="ad-badge" id="adBadge">Active</span>
+                </div>
+                <div class="ad-body">
+                    <div class="ad-name" id="adNameDisplay">Tonur Premium Ad</div>
+                    <div class="ad-desc" id="adDescDisplay">Watch this ad to earn rewards.</div>
+                    <div class="ad-reward" id="adRewardDisplay">+0.00100 TRX</div>
+                    <div class="ad-limit" id="adLimitDisplay">0 left today</div>
+                    <div class="ad-portal" id="adPortalDisplay">
+                        <span>Portal1: AGRAM123</span>
+                        <span>Portal2: MGRAM456</span>
+                        <span>Portal3: MON789</span>
+                    </div>
+                    <button class="ad-action" id="adActionBtn" onclick="event.stopPropagation(); watchAd();">
+                        <i class="fas fa-play"></i> Watch Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Referral -->
+            <div class="section-header">
+                <h3><i class="fas fa-users text-gold"></i> Referral</h3>
+            </div>
+            <div class="referral-box">
+                <div class="ref-code">
+                    <i class="fas fa-link text-primary"></i>
+                    <code id="refCodeDisplay">LOADING...</code>
+                    <button class="copy-btn" onclick="copyReferral()">Copy</button>
+                </div>
+                <div class="ref-stats">
+                    <div class="stat"><div class="num" id="refCount">0</div><div class="label">Referrals</div></div>
+                    <div class="stat"><div class="num" id="refEarnings">0.00000</div><div class="label">Earned (TRX)</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: TASKS -->
+        <div class="page" id="page-tasks">
+            <div class="section-header"><h3><i class="fas fa-list-check text-primary"></i> All Tasks</h3></div>
+            <div class="task-list" id="fullTaskList"></div>
+        </div>
+
+        <!-- PAGE: ADS -->
+        <div class="page" id="page-ads">
+            <div class="section-header"><h3><i class="fas fa-play-circle text-primary"></i> Watch Ad</h3></div>
+            <div class="ad-single" id="fullAdSingle" onclick="watchAd()">
+                <div class="ad-image" id="adImageDisplayFull">
+                    <div class="lightning-flash"></div>
+                    <div class="ad-title-animation" id="adImageTextFull">Tonur Ad</div>
+                    <span class="ad-badge" id="adBadgeFull">Active</span>
+                </div>
+                <div class="ad-body">
+                    <div class="ad-name" id="adNameDisplayFull">Tonur Premium Ad</div>
+                    <div class="ad-desc" id="adDescDisplayFull">Watch this ad to earn rewards.</div>
+                    <div class="ad-reward" id="adRewardDisplayFull">+0.00100 TRX</div>
+                    <div class="ad-limit" id="adLimitDisplayFull">0 left today</div>
+                    <div class="ad-portal" id="adPortalDisplayFull">
+                        <span>Portal1: AGRAM123</span>
+                        <span>Portal2: MGRAM456</span>
+                        <span>Portal3: MON789</span>
+                    </div>
+                    <button class="ad-action" id="adActionBtnFull" onclick="event.stopPropagation(); watchAd();">
+                        <i class="fas fa-play"></i> Watch Now
+                    </button>
+                </div>
+            </div>
+            <div class="mt-12 text-muted" style="font-size:13px;text-align:center;">
+                <i class="fas fa-info-circle"></i> You can watch this ad once per day. Limit resets daily.
+            </div>
+        </div>
+
+        <!-- PAGE: WITHDRAW -->
+        <div class="page" id="page-withdraw">
+            <div class="withdraw-section">
+                <h3><i class="fas fa-arrow-up text-green"></i> Withdraw Funds</h3>
+                <div class="sub">Choose your preferred currency and enter your wallet address.</div>
+
+                <div class="info-row">
+                    <span class="label">Available Balance</span>
+                    <span class="value" id="withdrawBalance">0.00000 TRX</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">≈ USDT Value</span>
+                    <span class="value" id="withdrawUsdt">0.00 USDT</span>
+                </div>
+                <div class="info-row" style="border-bottom:2px solid var(--border);">
+                    <span class="label">Min. Withdrawal</span>
+                    <span class="value" id="withdrawMinDisplay">10.00 USDT</span>
+                </div>
+                <div class="info-row" style="border-bottom:2px solid var(--border);">
+                    <span class="label">Referrals Required</span>
+                    <span class="value" id="withdrawRefRequired">3</span>
+                </div>
+                <div class="info-row" style="border-bottom:2px solid var(--border);">
+                    <span class="label">Your Referrals</span>
+                    <span class="value" id="withdrawRefCount">0</span>
+                </div>
+
+                <div class="withdraw-methods" id="withdrawMethods"></div>
+
+                <div class="form-group">
+                    <label>Amount (USDT)</label>
+                    <input type="number" id="withdrawAmount" placeholder="0.00" min="0" step="0.01" />
+                </div>
+                <div class="form-group">
+                    <label>Wallet Address</label>
+                    <input type="text" id="withdrawAddress" placeholder="Enter your wallet address" />
+                </div>
+                <button class="admin-btn" onclick="submitWithdraw()">
+                    <i class="fas fa-paper-plane"></i> Request Withdrawal
+                </button>
+                <div class="mt-12 text-muted" style="font-size:12px;text-align:center;">
+                    Processing time: 24-48 hrs · All requests are reviewed by admin.
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: PROFILE -->
+        <div class="page" id="page-profile">
+            <!-- User Profile Card -->
+            <div class="user-profile-card" id="userProfileCard2">
+                <div class="user-avatar" id="userAvatar2">
+                    <img id="userAvatarImg2" src="https://i.pravatar.cc/150?img=1" alt="avatar" />
+                </div>
+                <div class="user-info">
+                    <div class="user-name" id="userDisplayName2">User</div>
+                    <div class="user-id" id="userDisplayId2">ID: loading...</div>
+                    <div class="user-refs" id="userDisplayRefs2">Referrals: 0</div>
+                </div>
+            </div>
+
+            <div class="section-header"><h3><i class="fas fa-trophy text-gold"></i> Leaderboard</h3></div>
+            <div class="leaderboard-list" id="leaderboardList"></div>
+
+            <div class="section-header mt-16"><h3><i class="fas fa-gift text-gold"></i> 7-Day Rewards</h3></div>
+            <div class="bonus-grid" id="profileBonusGrid"></div>
+
+            <div class="section-header mt-16"><h3><i class="fas fa-users text-primary"></i> Referral</h3></div>
+            <div class="referral-box">
+                <div class="ref-code">
+                    <i class="fas fa-link text-primary"></i>
+                    <code id="refCodeDisplay2">LOADING...</code>
+                    <button class="copy-btn" onclick="copyReferral()">Copy</button>
+                </div>
+                <div class="ref-stats">
+                    <div class="stat"><div class="num" id="refCount2">0</div><div class="label">Referrals</div></div>
+                    <div class="stat"><div class="num" id="refEarnings2">0.00000</div><div class="label">Earned (TRX)</div></div>
+                </div>
+            </div>
+
+            <div class="section-header mt-16"><h3><i class="fas fa-headset text-primary"></i> Support</h3></div>
+            <div class="support-card">
+                <div class="support-icon"><i class="fas fa-life-ring"></i></div>
+                <p style="color:var(--text-secondary);font-size:14px;" id="supportText">Need help? Contact our support team.</p>
+                <a href="#" class="support-btn" id="supportLink" onclick="openSupport();return false;">
+                    <i class="fas fa-comment"></i> Get Support
+                </a>
+            </div>
+        </div>
     </div>
 
-    <script>
-    const K='toe_v13_',APASS='tam91207';
-    let U=null,AD=null,SP='bkash',sg='male',inf=!1,cdLeft=0,cdTimer=null;
-    const dA=()=>({adT:'View Ad',adS:'Click to earn',adL:['https://google.com'],adE:1,adLm:10,ccs:30,jt:[{t:'Telegram Channel',l:'https://t.me/1',r:5},{t:'YouTube Subscribe',l:'https://youtube.com',r:3},{t:'Facebook Follow',l:'https://facebook.com',r:4},{t:'Website Visit',l:'https://google.com',r:2}],rr:5,rt:'Invite Friends',rl:'',bi:'',ni:'',ms:[],ar:{a:10,r:3},mw:50,db:{en:!1,am:0.25,im:5},sb:[],supportLink:'https://t.me/pocketmoney_support',videoURL:'',spinRewards:[0.10,0.15,0.20,0.25,0.30,0.50,1.00]});
+    <!-- ===== BOTTOM NAV ===== -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-page="home" onclick="navigateTo('home')">
+            <i class="fas fa-home"></i><span>Home</span>
+        </button>
+        <button class="nav-item" data-page="tasks" onclick="navigateTo('tasks')">
+            <i class="fas fa-list-check"></i><span>Tasks</span>
+        </button>
+        <button class="nav-item" data-page="ads" onclick="navigateTo('ads')">
+            <i class="fas fa-play-circle"></i><span>Ads</span>
+        </button>
+        <button class="nav-item" data-page="withdraw" onclick="navigateTo('withdraw')">
+            <i class="fas fa-arrow-up"></i><span>Withdraw</span>
+        </button>
+        <button class="nav-item" data-page="profile" onclick="navigateTo('profile')">
+            <i class="fas fa-user"></i><span>Profile</span>
+        </button>
+    </nav>
+</div>
 
-    function loadU(){const uid=localStorage.getItem(K+'uid');if(!uid)return null;try{return JSON.parse(localStorage.getItem(K+'user_'+uid));}catch(e){return null;}}
-    function saveU(u){localStorage.setItem(K+'user_'+u.id,JSON.stringify(u));}
-    function loadAD(){try{const d=localStorage.getItem(K+'admin');return d?{...dA(),...JSON.parse(d)}:dA();}catch(e){return dA();}}
-    function saveAD(){localStorage.setItem(K+'admin',JSON.stringify(AD));}
-    function gAllU(){const u=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(K+'user_'))try{u.push(JSON.parse(localStorage.getItem(k)));}catch(e){}}return u;}
-    function gWds(){try{return JSON.parse(localStorage.getItem(K+'withdrawals')||'[]');}catch(e){return[];}}
-    function saveWds(w){localStorage.setItem(K+'withdrawals',JSON.stringify(w));}
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
 
-    // ===== AUTH =====
-    function renderAuth(mode){const c=document.getElementById('authBox'),rp=new URLSearchParams(location.search).get('ref')||'';c.innerHTML='<div class="auth-logo">💰</div><div class="auth-title">💸 Trusted Online Earning</div><div class="auth-subtitle">'+(mode==='login'?'Login to your account':'Create new account')+'</div><div class="auth-error" id="authError"></div>'+(mode==='signup'?'<input class="auth-input" id="fn" placeholder="First Name"><input class="auth-input" id="ln" placeholder="Last Name"><div class="gender-select"><div class="gender-opt sel" onclick="selG(\'male\',this)">👨 Male</div><div class="gender-opt" onclick="selG(\'female\',this)">👩 Female</div></div>':'')+'<input class="auth-input" id="ae" placeholder="Phone or Email"><input type="password" class="auth-input" id="ap" placeholder="Password">'+(mode==='signup'?'<input type="password" class="auth-input" id="acp" placeholder="Confirm Password">':'')+'<button class="auth-btn" onclick="'+(mode==='login'?'doLogin()':'doSignup()')+'">'+(mode==='login'?'🔑 Login':'📝 Sign Up')+'</button><div class="auth-link" onclick="renderAuth(\''+(mode==='login'?'signup':'login')+'\')">'+(mode==='login'?"No account? <b>Sign Up</b>":'Have account? <b>Login</b>')+'</div>';sg='male';}
-    window.selG=function(g,el){sg=g;document.querySelectorAll('.gender-opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');};
-    window.doSignup=function(){const fn=document.getElementById('fn')?.value?.trim(),ln=document.getElementById('ln')?.value?.trim(),em=document.getElementById('ae')?.value?.trim(),pw=document.getElementById('ap')?.value?.trim(),cp=document.getElementById('acp')?.value?.trim(),er=document.getElementById('authError');er.style.display='none';if(!fn||!ln||!em||!pw){er.style.display='block';er.textContent='Fill all fields!';return;}if(pw!==cp){er.style.display='block';er.textContent='Passwords mismatch!';return;}const uid='U'+Date.now().toString(36).toUpperCase(),rp=new URLSearchParams(location.search).get('ref')||'';U={id:uid,fn,ln,pn:fn+' '+ln,email:em,gender:sg,pass:pw,bal:0,rc:0,tc:0,toc:0,bc:0,cc:0,ap:!1,vip:!1,de:{},tx:[],rf:[],jt:[],sbc:[],spinDay:0,spinClaimed:[],lbt:Date.now(),lct:0,lr:'',dbc:'',refBy:rp};localStorage.setItem(K+'uid',uid);saveU(U);if(rp)doRef();showApp();initApp();};
-    window.doLogin=function(){const em=document.getElementById('ae')?.value?.trim(),pw=document.getElementById('ap')?.value?.trim(),er=document.getElementById('authError');er.style.display='none';if(!em||!pw){er.style.display='block';er.textContent='Fill all fields!';return;}let fd=!1;for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(K+'user_')){const u=JSON.parse(localStorage.getItem(k));if((u.email===em||u.id===em)&&u.pass===pw){U=u;localStorage.setItem(K+'uid',u.id);fd=!0;break;}}}if(fd){showApp();initApp();}else{er.style.display='block';er.textContent='Invalid!';}};
-    function logout(){localStorage.removeItem(K+'uid');U=null;if(cdTimer)clearInterval(cdTimer);document.getElementById('mainApp').style.display='none';document.getElementById('authScreen').style.display='flex';renderAuth('login');}window.logout=logout;
-    function showApp(){document.getElementById('authScreen').style.display='none';document.getElementById('mainApp').style.display='block';}
+<!-- ===== ADMIN PASSWORD PROMPT (NO "ADMIN" TEXT) ===== -->
+<div class="admin-password-prompt" id="adminPrompt">
+    <div class="prompt-box">
+        <div class="prompt-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3>Verify Identity</h3>
+        <p>Enter your secure code to continue.</p>
+        <input type="password" id="adminPasswordInput" placeholder="••••••••" maxlength="20" />
+        <div class="prompt-actions">
+            <button class="btn-cancel" onclick="closeAdminPrompt()">Cancel</button>
+            <button class="btn-confirm" onclick="verifyAdminPassword()">Unlock</button>
+        </div>
+    </div>
+</div>
 
-    // ===== 7 DAY SPIN =====
-    function renderSpinWheel(){if(!U)return;const rewards=AD?.spinRewards||[0.10,0.15,0.20,0.25,0.30,0.50,1.00];U.spinDay=U.spinDay||0;U.spinClaimed=U.spinClaimed||[];const t=new Date().toISOString().split('T')[0];if(U.spinReset!==t){U.spinDay=0;U.spinClaimed=[];U.spinReset=t;saveU(U);}
-    let dots='';for(let i=0;i<7;i++){const claimed=U.spinClaimed.includes(i);const isToday=i===U.spinDay&&!claimed;let cls='';if(claimed)cls='done';else if(isToday)cls='today';dots+='<div class="day-dot '+cls+'">'+(i+1)+'<div class="day-reward">+'+rewards[i].toFixed(2)+'</div></div>';}
-    document.getElementById('dayTracker').innerHTML=dots;const btn=document.getElementById('spinBtn');const canSpin=U.spinDay<7&&!U.spinClaimed.includes(U.spinDay);btn.disabled=!canSpin;btn.textContent=canSpin?'🎰 SPIN NOW (Day '+(U.spinDay+1)+')':'✅ Completed';}
-    window.doSpin=function(){if(!U)return;const rewards=AD?.spinRewards||[0.10,0.15,0.20,0.25,0.30,0.50,1.00];if(U.spinDay>=7||U.spinClaimed.includes(U.spinDay)){alert('Already claimed!');return;}const reward=rewards[U.spinDay];U.spinClaimed.push(U.spinDay);U.bal+=reward;U.bc++;U.tc++;U.tx.unshift({ty:'credit',am:reward,ds:'Spin Day '+(U.spinDay+1)+' Bonus',dt:new Date().toISOString()});U.spinDay++;if(U.spinDay>=7)U.spinDay=0;saveU(U);document.getElementById('spinResult').textContent='🎉 Won +'+reward.toFixed(2)+' Tk!';setTimeout(()=>{document.getElementById('spinResult').textContent='';},3000);renderSpinWheel();renderWallet();refreshUI();renderTx();};
+<!-- ===== ADMIN PANEL ===== -->
+<div class="admin-panel" id="adminPanel">
+    <div class="admin-box">
+        <div class="admin-header">
+            <h2><i class="fas fa-crown text-gold"></i> Admin Panel</h2>
+            <button class="close-admin" onclick="closeAdminPanel()">✕</button>
+        </div>
 
-    // ===== AD =====
-    function startAd(){if(!U)return;if((U.cc||0)>=(AD?.adLm||10)){alert('Daily limit!');return;}if(cdLeft>0)return;cdLeft=AD?.ccs||30;const b=document.getElementById('ctb'),t=document.getElementById('cdText');b.disabled=!0;t.textContent='⏳ '+cdLeft+'s';if(cdTimer)clearInterval(cdTimer);cdTimer=setInterval(()=>{cdLeft--;t.textContent=cdLeft>0?'⏳ '+cdLeft+'s':'';if(cdLeft<=0){clearInterval(cdTimer);if(b&&(U.cc||0)<(AD?.adLm||10))b.disabled=!1;}},1000);if(AD?.adL?.[0])window.open(AD.adL[0],'_blank');if(AD?.pc)try{eval(AD.pc)}catch(e){}U.cc=(U.cc||0)+1;U.toc=(U.toc||0)+1;U.tc=(U.tc||0)+1;U.bal=(U.bal||0)+(AD?.adE||1);const d=new Date().toISOString().split('T')[0];U.de=U.de||{};U.de[d]=(U.de[d]||0)+(AD?.adE||1);U.tx=U.tx||[];U.tx.unshift({ty:'credit',am:(AD?.adE||1),ds:'Click Task',dt:new Date().toISOString()});saveU(U);renderWallet();refreshUI();renderCalendar();renderTx();}window.startAd=startAd;
-    // ===== BONUS =====
-    window.claimDB=function(){if(!U)return;const t=new Date().toISOString().split('T')[0];if(U.dbc===t){alert('Already claimed!');return;}const n=Date.now(),iv=(AD.db.im||5)*60000;if((n-(U.lbt||n))<iv){alert('Wait!');return;}if(AD?.db?.link)window.open(AD.db.link,'_blank');U.dbc=t;U.lbt=Date.now();U.bal+=(AD.db.am||0.25);U.bc++;U.tc++;U.toc++;U.tx.unshift({ty:'credit',am:(AD.db.am||0.25),ds:'Daily Bonus',dt:new Date().toISOString()});saveU(U);renderWallet();refreshUI();renderBonus();renderTx();};
-    window.claimSB=function(i){if(!U)return;const sb=(AD?.sb||[])[i];if(!sb)return;U.sbc=U.sbc||[];const mx=sb.maxClaims||1;if(U.sbc.filter(x=>x===i).length>=mx&&mx>0){alert('Limit!');return;}if(sb.link)window.open(sb.link,'_blank');U.sbc.push(i);U.bal+=(sb.amount||0);U.bc++;U.tc++;U.toc++;U.tx.unshift({ty:'credit',am:(sb.amount||0),ds:'Special: '+sb.title,dt:new Date().toISOString()});saveU(U);renderWallet();refreshUI();renderBonus();renderTx();};
-    window.doJoin=function(i){if(!U)return;const t=(AD?.jt||[])[i];if(!t||(U.jt||[]).includes(i))return;if(t.l)window.open(t.l,'_blank');U.jt=U.jt||[];U.jt.push(i);U.bal+=t.r;U.tc++;U.bc++;U.toc++;U.tx.unshift({ty:'credit',am:t.r,ds:'Joining: '+t.t,dt:new Date().toISOString()});saveU(U);renderWallet();refreshUI();renderTasks();renderTx();};
+        <!-- General Settings -->
+        <div class="admin-section">
+            <h4>⚙️ General Settings</h4>
+            <div class="row-2">
+                <div class="form-group">
+                    <label>USDT per 1 TRX</label>
+                    <input type="number" id="adminUsdtRate" step="0.0001" min="0" />
+                </div>
+                <div class="form-group">
+                    <label>Min Withdraw (USDT)</label>
+                    <input type="number" id="adminMinWithdraw" step="0.01" min="0" />
+                </div>
+            </div>
+            <div class="row-2">
+                <div class="form-group">
+                    <label>Daily Ad Limit</label>
+                    <input type="number" id="adminAdLimit" step="1" min="0" />
+                </div>
+                <div class="form-group">
+                    <label>Ad Cooldown (sec)</label>
+                    <input type="number" id="adminAdCooldown" step="1" min="0" />
+                </div>
+            </div>
+            <div class="row-2">
+                <div class="form-group">
+                    <label>Referral Bonus (TRX)</label>
+                    <input type="number" id="adminRefBonus" step="0.00001" min="0" />
+                </div>
+                <div class="form-group">
+                    <label>Referrals Required for Withdraw</label>
+                    <input type="number" id="adminRefRequired" step="1" min="0" />
+                </div>
+            </div>
+            <button class="admin-btn" onclick="saveAdminSettings()">Save Settings</button>
+        </div>
 
-    // ===== RENDER =====
-    function initApp(){AD=loadAD();refreshAll();setInterval(()=>{if(inf)return;U=loadU();AD=loadAD();if(!U)return;const t=new Date().toISOString().split('T')[0];if(U.lr!==t){U.cc=0;U.dbc='';U.lr=t;saveU(U);}if(U.spinReset!==t){U.spinDay=0;U.spinClaimed=[];U.spinReset=t;saveU(U);}refreshUI();renderWallet();renderBonus();renderSpinWheel();renderCalendar();},5000);}
-    function refreshAll(){U=loadU();AD=loadAD();if(!U)return;refreshUI();renderWallet();renderBonus();renderSpinWheel();renderAd();renderTasks();renderCalendar();doRef();renderTx();renderInbox();}
-    function refreshUI(){if(!U||inf)return;document.getElementById('pn').textContent=U.pn;document.getElementById('pi').textContent='ID: '+(U.id||'').substring(0,8);document.getElementById('rc').textContent=U.rc||0;document.getElementById('tc').textContent=U.tc||0;document.getElementById('toc').textContent=U.toc||0;document.getElementById('bc').textContent=U.bc||0;document.getElementById('ccd').textContent=U.cc||0;document.getElementById('cld').textContent=AD?.adLm||10;document.getElementById('crw').textContent=AD?.adE||1;document.getElementById('rft').textContent=AD?.rt||'Invite';document.getElementById('rfr').textContent=AD?.rr||5;document.getElementById('rli').value=AD?.rl||(location.origin+location.pathname+'?ref='+U.id);renderWithdraw();}
-    function renderWallet(){const c=document.getElementById('walletBox');if(!c||!U)return;let sf='';for(let i=0;i<10;i++)sf+='<div class="snow" style="left:'+Math.random()*100+'%;animation-delay:'+Math.random()*4+'s;animation-duration:'+(2+Math.random()*3)+'s;">❄</div>';c.innerHTML=sf+'<div class="wc"><div class="wh"><span class="wl">👛 Balance</span><span class="vb" style="display:'+(U.vip?'inline-block':'none')+';">👑 VIP</span></div><div class="ba">'+(U.bal||0).toFixed(2)+' Tk</div><span class="as '+(U.ap||U.vip?'ay':'an')+'">'+(U.ap||U.vip?'✅ Approved':'⏳ Pending')+'</span></div>';}
-    function renderBonus(){if(!U)return;const t=new Date().toISOString().split('T')[0],cl=U.dbc===t,n=Date.now(),iv=(AD.db.im||5)*60000,cc=(n-(U.lbt||n))>=iv&&!cl;let h='';if(AD?.db?.en){h+='<div class="bonus-card'+(cl?' done':'')+'"><h3>🎁 Daily Bonus</h3><div class="bonus-amount">+'+(AD.db.am||0.25).toFixed(2)+' Tk</div>'+(cl?'<button class="btn btn-p" disabled>✅ Claimed</button>':'<button class="btn btn-p" style="background:#FDCB6E;color:#1a1a3e;" onclick="claimDB()" '+(cc?'':'disabled')+'>🎁 Claim</button>')+'</div>';}document.getElementById('dailyBonusContainer').innerHTML=h;h='';if(AD?.sb&&AD.sb.length>0){AD.sb.forEach((sb,i)=>{const mx=sb.maxClaims||1,cnt=(U.sbc||[]).filter(x=>x===i).length,cl2=cnt>=mx&&mx>0;h+='<div class="bonus-card'+(cl2?' done':'')+'" style="background:linear-gradient(135deg,#6C5CE7,#A29BFE);"><h3>🎯 '+sb.title+'</h3><div class="bonus-amount">+'+(sb.amount||0).toFixed(2)+' Tk</div>'+(mx>0?'<div style="font-size:11px;">'+cnt+'/'+mx+'</div>':'')+(cl2?'<button class="btn btn-p" disabled>✅ Claimed</button>':'<button class="btn btn-p" style="background:#FDCB6E;color:#1a1a3e;" onclick="claimSB('+i+')">🎁 Claim</button>')+'</div>';});}document.getElementById('specialBonusContainer').innerHTML=h;}
-    function renderAd(){const c=document.getElementById('adc');if(!c)return;c.innerHTML='<div class="adi"><div class="aic">📡</div><div class="at">'+(AD?.adT||'View Ad')+'</div><div class="ar">⚡ +'+(AD?.adE||1)+' Tk</div></div>';}
-    function renderTasks(){const c=document.getElementById('jtc');if(!U)return;let h='';(AD?.jt||[]).forEach((t,i)=>{const d=(U.jt||[]).includes(i);h+='<div class="tk'+(d?' dn':'')+'"><div class="th"><span class="tt">🔗 '+t.t+'</span><span class="tr">'+(d?'✅':'+'+t.r+' Tk')+'</span></div><button class="btn btn-p" onclick="doJoin('+i+')" '+(d?'disabled':'')+' style="'+(d?'background:#00B894;':'')+'">'+(d?'✅ Done':'Join & Earn')+'</button></div>';});c.innerHTML=h||'<p>No tasks</p>';}
-    function renderCalendar(){if(!U)return;const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],today=new Date();const sw=new Date();sw.setDate(today.getDate()-today.getDay());document.getElementById('cwt').textContent='Week of '+sw.toLocaleDateString('en-US',{month:'short',day:'numeric'});let mx=1,tt=0;for(let i=0;i<7;i++){const d=new Date(sw);d.setDate(sw.getDate()+i);const e=(U.de||{})[d.toISOString().split('T')[0]]||0;if(e>mx)mx=e;tt+=e;}let h='';for(let i=0;i<7;i++){const d=new Date(sw);d.setDate(sw.getDate()+i),ds=d.toISOString().split('T')[0],e=(U.de||{})[ds]||0,isT=d.toDateString()===today.toDateString(),ht=Math.max((e/mx)*80,3);h+='<div class="ci"><div class="cb" style="height:'+ht+'px;'+(isT?'background:linear-gradient(180deg,#FFD700,#FFA500);':'')+'">'+(e>0?'<div class="fl"></div>':'')+'</div><span class="cd" style="'+(isT?'color:var(--p);font-weight:700;':'')+'">'+days[d.getDay()]+'</span><span class="ca">'+(e>0?'+'+e.toFixed(0):'')+'</span></div>';}document.getElementById('cr').innerHTML=h;document.getElementById('csm').innerHTML='💰 <b>'+tt.toFixed(2)+' Tk</b>';}
-    function renderWithdraw(){const c=document.getElementById('wsc');if(!c||!U)return;const mw=AD?.mw||50;if(!U.ap&&!U.vip){c.innerHTML='<div class="wdw"><div style="text-align:center;padding:30px;color:white;"><div style="font-size:60px;">🔒</div><h3>Withdrawal Locked</h3></div></div>';return;}const bi=AD?.bi||'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><rect fill="#E91E63" width="50" height="50" rx="8"/><text fill="white" x="25" y="30" text-anchor="middle" font-size="20" font-weight="bold">B</text></svg>'),ni=AD?.ni||'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><rect fill="#E74C3C" width="50" height="50" rx="8"/><text fill="white" x="25" y="30" text-anchor="middle" font-size="20" font-weight="bold">N</text></svg>');c.innerHTML='<div class="wdw"><div class="wdc"><div class="wdt">💰 Withdraw</div><div class="pmw"><div class="pcw '+(SP==='bkash'?'sel':'')+'" onclick="SPY(\'bkash\')"><img src="'+bi+'">bKash</div><div class="pcw '+(SP==='nagad'?'sel':'')+'" onclick="SPY(\'nagad\')"><img src="'+ni+'">Nagad</div></div><input type="tel" class="inw" id="wa" placeholder="Account Number" autocomplete="off"><input type="number" class="inw" id="wam" placeholder="Amount (Min '+mw+')" inputmode="numeric" autocomplete="off"><div class="ifw">Min: '+mw+' Tk | Bal: '+(U.bal||0).toFixed(2)+'</div><button class="btw" onclick="doWithdraw()" '+((U.bal||0)<mw?'disabled':'')+'>💸 Withdraw</button></div></div>';}
-    window.SPY=function(m){SP=m;renderWithdraw();};
-    window.doWithdraw=function(){U=loadU();if(!U||!U.ap&&!U.vip){alert('Locked!');return;}const mw=AD?.mw||50,ae=document.getElementById('wa'),am=document.getElementById('wam');if(!ae||!am)return;const a=ae.value.trim(),m=parseFloat(am.value);if(!a||a.length<10){alert('Valid number!');return;}if(!m||m<mw){alert('Min '+mw+' Tk!');return;}if(m>(U.bal||0)){alert('No balance!');return;}U.bal-=m;U.tx.unshift({ty:'debit',am:m,ds:'Withdraw: '+SP.toUpperCase()+' - '+a,dt:new Date().toISOString(),st:'pending'});saveU(U);const wds=gWds();wds.push({uid:U.id,un:U.pn,am:m,mt:SP,ac:a,dt:new Date().toISOString(),st:'pending'});saveWds(wds);renderWithdraw();renderTx();alert('✅ Sent!');};
-    function renderTx(){const c=document.getElementById('txh');if(!U)return;let h='';(U.tx||[]).slice(0,20).forEach(tx=>{h+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ddd;font-size:12px;"><div><b>'+tx.ds+'</b><br><small>'+new Date(tx.dt).toLocaleDateString('bn-BD')+'</small>'+(tx.st==='pending'?' ⏳':'')+(tx.st==='approved'?' ✅':'')+(tx.st==='rejected'?' ❌':'')+'</div><span style="color:'+(tx.ty==='credit'?'#00B894':'#FF7675')+';font-weight:700;">'+(tx.ty==='credit'?'+':'-')+tx.am.toFixed(2)+' Tk</span></div>';});c.innerHTML=h||'<p>No transactions</p>';}
-    function renderInbox(){const c=document.getElementById('ims');let h='';(AD?.ms||[]).slice().reverse().forEach(m=>{h+='<div class="tk" style="border-left-color:#FDCB6E;"><b>📢 Admin</b><p>'+m.text+'</p><small>'+new Date(m.date).toLocaleString('bn-BD')+'</small></div>';});c.innerHTML=h||'<p>No messages</p>';}
-    function doRef(){if(!U)return;const p=new URLSearchParams(location.search),r=p.get('ref');if(r&&r!==U.id&&!(U.rf||[]).includes(r)){U.rf=U.rf||[];U.rf.push(r);U.rc++;U.bal+=(AD?.rr||5);U.tx.unshift({ty:'credit',am:(AD?.rr||5),ds:'Referral Bonus',dt:new Date().toISOString()});saveU(U);}}
-    function crl(){const i=document.getElementById('rli');if(i){i.select();document.execCommand('copy');alert('✅ Copied!');}}window.crl=crl;
-    function sp(n){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('ac'));document.querySelectorAll('.ni').forEach(n=>n.classList.remove('ac'));const m={home:'homePage',task:'taskPage',support:'supportPage',referral:'referralPage',wallet:'walletPage',inbox:'inboxPage'};const id=m[n];if(id)document.getElementById(id).classList.add('ac');const nm={home:0,task:1,support:2,referral:3,wallet:4};const idx=nm[n];if(idx!==undefined)document.querySelectorAll('.ni')[idx].classList.add('ac');if(n==='task')renderAd();refreshAll();document.getElementById('sc').scrollTop=0;}window.sp=sp;
-    setInterval(()=>{if(!U)return;const n=Date.now(),iv=((AD?.db?.im)||5)*60000,nb=(U.lbt||n)+iv,d=Math.max(0,nb-n);const el=document.getElementById('timerClock');if(el)el.textContent=String(Math.floor(d/3600000)).padStart(2,'0')+':'+String(Math.floor((d%3600000)/60000)).padStart(2,'0')+':'+String(Math.floor((d%60000)/1000)).padStart(2,'0');},1000);
+        <!-- Manage Tasks -->
+        <div class="admin-section">
+            <h4>📋 Manage Tasks</h4>
+            <div class="row-2">
+                <div class="form-group">
+                    <label>Task Title</label>
+                    <input type="text" id="adminTaskTitle" placeholder="e.g. Visit Website" />
+                </div>
+                <div class="form-group">
+                    <label>Reward (TRX)</label>
+                    <input type="number" id="adminTaskReward" step="0.00001" min="0" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Task URL</label>
+                <input type="url" id="adminTaskUrl" placeholder="https://..." />
+            </div>
+            <button class="admin-btn" onclick="addTask()">+ Add Task</button>
+            <div class="admin-list mt-8" id="adminTaskList"></div>
+        </div>
 
-    // ===== ADMIN =====
-    function checkAdminPass(){if(document.getElementById('adminPassInput').value.trim()===APASS){document.getElementById('adminPassInput').value='';openAdmin();}else{alert('❌ Wrong!');}}window.checkAdminPass=checkAdminPass;
-    function openAdmin(){document.getElementById('adminOverlay').classList.add('show');refreshAdmin();}
-    function closeAdmin(){document.getElementById('adminOverlay').classList.remove('show');}window.closeAdmin=closeAdmin;
-    function refreshAdmin(){AD=loadAD();const us=gAllU(),wd=gWds();let h='<div class="admin-sec"><h4>📊 Dashboard</h4><p>Users: <b>'+us.length+'</b> | Bal: <b>'+us.reduce((s,u)=>s+(u.bal||0),0).toFixed(0)+'</b> | Pending WD: <b>'+wd.filter(w=>w.st==='pending').length+'</b></p></div>';
-    h+='<div class="admin-sec"><h4>👥 Users</h4><table class="admin-tbl"><tr><th>ID</th><th>Name</th><th>Bal</th><th>Action</th></tr>';
-    us.forEach(u=>{h+='<tr><td>'+(u.id||'').substring(0,6)+'</td><td>'+u.pn+'</td><td>'+(u.bal||0).toFixed(0)+'</td><td><button class="admin-btn a-green" style="padding:2px 5px;font-size:8px;" onclick="admAp(\''+u.id+'\')">✅</button> <button class="admin-btn a-yellow" style="padding:2px 5px;font-size:8px;" onclick="admAddBal(\''+u.id+'\')">💵</button> <button class="admin-btn a-red" style="padding:2px 5px;font-size:8px;" onclick="admBlk(\''+u.id+'\')">🚫</button></td></tr>';});h+='</table></div>';
-    h+='<div class="admin-sec"><h4>📢 Ads</h4><input class="admin-inp" id="admAdT" value="'+(AD.adT||'')+'" placeholder="Title"><input class="admin-inp" id="admAdS" value="'+(AD.adS||'')+'" placeholder="Sub"><input class="admin-inp" type="number" id="admAdLm" value="'+(AD.adLm||10)+'" placeholder="Daily Limit"><input class="admin-inp" type="number" id="admAdE" value="'+(AD.adE||1)+'" step="0.1" placeholder="Per Click"><input class="admin-inp" type="number" id="admCcs" value="'+(AD.ccs||30)+'" placeholder="Cooldown (sec)"><input class="admin-inp" id="admAdL1" value="'+(AD.adL||[])[0]||''+'" placeholder="Link 1"><input class="admin-inp" id="admAdL2" value="'+(AD.adL||[])[1]||''+'" placeholder="Link 2"><input class="admin-inp" id="admAdL3" value="'+(AD.adL||[])[2]||''+'" placeholder="Link 3"><textarea class="admin-inp" id="admPc" placeholder="Portal Code (JS)">'+(AD.pc||'')+'</textarea><button class="admin-btn a-blue" onclick="sAdmAd()">💾 Save</button></div>';
-    h+='<div class="admin-sec"><h4>📋 Tasks</h4>';for(let i=0;i<4;i++){const t=AD.jt||[];h+='<input class="admin-inp" id="admTt'+i+'" value="'+(t[i]?t[i].t:'')+'" placeholder="T'+(i+1)+'"><input class="admin-inp" id="admTl'+i+'" value="'+(t[i]?t[i].l:'')+'" placeholder="Link"><input class="admin-inp" type="number" id="admTr'+i+'" value="'+(t[i]?t[i].r:0)+'" placeholder="Reward">';}h+='<button class="admin-btn a-blue" onclick="sAdmTsk()">💾 Save</button></div>';
-    h+='<div class="admin-sec"><h4>🎁 Bonus</h4><label><input type="checkbox" id="admDbEn" '+(AD.db&&AD.db.en?'checked':'')+'> Enable</label><input class="admin-inp" type="number" id="admDbAm" value="'+(AD.db?AD.db.am:0.25)+'" step="0.01"><input class="admin-inp" type="number" id="admDbIm" value="'+(AD.db?AD.db.im:5)+'"><input class="admin-inp" id="admDbLk" value="'+(AD.db?AD.db.link||'':'')+'" placeholder="Link"><button class="admin-btn a-blue" onclick="sAdmBon()">💾 Save</button><h5 style="margin-top:8px;">🎯 Special</h5><div id="admSbList"></div><button class="admin-btn a-blue" onclick="addAdmSb()">➕ Add</button><button class="admin-btn a-green" onclick="sAdmSb()">💾 Save</button></div>';
-    h+='<div class="admin-sec"><h4>🎰 Spin Rewards (7 Days)</h4>';const sr=AD.spinRewards||[0.10,0.15,0.20,0.25,0.30,0.50,1.00];for(let i=0;i<7;i++){h+='<input class="admin-inp" type="number" id="admSpin'+i+'" value="'+sr[i]+'" step="0.01" placeholder="Day '+(i+1)+' Reward (Tk)">';}h+='<button class="admin-btn a-blue" onclick="sAdmSpin()">💾 Save Spin Rewards</button></div>';
-    h+='<div class="admin-sec"><h4>🔗 Referral</h4><input class="admin-inp" id="admRt" value="'+(AD.rt||'')+'" placeholder="Title"><input class="admin-inp" type="number" id="admRr" value="'+(AD.rr||5)+'" placeholder="Reward"><input class="admin-inp" id="admRl" value="'+(AD.rl||'')+'" placeholder="Custom Link"><button class="admin-btn a-blue" onclick="sAdmRef()">💾 Save</button></div>';
-    h+='<div class="admin-sec"><h4>💳 Icons</h4><input class="admin-inp" id="admBi" value="'+(AD.bi||'')+'" placeholder="bKash URL"><input class="admin-inp" id="admNi" value="'+(AD.ni||'')+'" placeholder="Nagad URL"><button class="admin-btn a-blue" onclick="sAdmIc()">💾 Save</button></div>';
-    h+='<div class="admin-sec"><h4>🆘 Support</h4><input class="admin-inp" id="admSupportLink" value="'+(AD.supportLink||'')+'" placeholder="Support Link"><input class="admin-inp" id="admVideoURL" value="'+(AD.videoURL||'')+'" placeholder="Video URL"><button class="admin-btn a-blue" onclick="sAdmSup()">💾 Save</button></div>';
-    h+='<div class="admin-sec"><h4>💵 Withdrawals</h4>';wd.forEach((w,i)=>{h+='<div style="background:#0a0a1a;padding:8px;border-radius:4px;margin-bottom:4px;display:flex;justify-content:space-between;"><div><b>'+(w.uid||'').substring(0,6)+'</b> - '+w.am+' Tk ('+w.mt+')<br><small>'+w.ac+'</small></div><div><span style="padding:2px 8px;border-radius:8px;font-size:8px;background:'+(w.st==='pending'?'#FDCB6E':w.st==='approved'?'#00B894':'#FF7675')+';">'+w.st+'</span>'+(w.st==='pending'?' <button class="admin-btn a-green" style="padding:2px 5px;font-size:8px;" onclick="admApWd('+i+')">✅</button> <button class="admin-btn a-red" style="padding:2px 5px;font-size:8px;" onclick="admRjWd('+i+')">❌</button>':'')+'</div></div>';});h+='</div>';
-    h+='<div class="admin-sec"><h4>⚙️ Settings</h4><input class="admin-inp" type="number" id="admAa" value="'+(AD.ar?AD.ar.a:10)+'" placeholder="Ads Required"><input class="admin-inp" type="number" id="admAr" value="'+(AD.ar?AD.ar.r:3)+'" placeholder="Refs Required"><input class="admin-inp" type="number" id="admMw" value="'+(AD.mw||50)+'" placeholder="Min Withdraw"><button class="admin-btn a-blue" onclick="sAdmSet()">💾 Save</button></div>';
-    h+='<div class="admin-sec"><h4>🔒 Password</h4><input class="admin-inp" type="password" id="admNewPass" placeholder="New Password"><button class="admin-btn a-red" onclick="chAdmPass()">🔑 Change</button></div>';
-    h+='<div class="admin-sec"><h4>📨 Broadcast</h4><textarea class="admin-inp" id="admBm" placeholder="Message..."></textarea><button class="admin-btn a-blue" onclick="sAdmBC()">📤 Send</button></div>';
-    document.getElementById('adminContent').innerHTML=h;
-    let sbh='';(AD.sb||[]).forEach((sb,i)=>{sbh+='<div style="background:#0a0a1a;padding:8px;border-radius:4px;margin-bottom:4px;"><b>#'+(i+1)+'</b><br><input class="admin-inp" id="admSbt'+i+'" value="'+(sb.title||'')+'" placeholder="Title"><input class="admin-inp" id="admSbl'+i+'" value="'+(sb.link||'')+'" placeholder="Link"><input class="admin-inp" type="number" id="admSba'+i+'" value="'+(sb.amount||0)+'" step="0.01"><input class="admin-inp" type="number" id="admSbm'+i+'" value="'+(sb.maxClaims||1)+'" placeholder="Max Claims"><button class="admin-btn a-red" style="padding:2px 5px;font-size:8px;" onclick="admRmSb('+i+')">🗑</button></div>';});document.getElementById('admSbList').innerHTML=sbh;}
-    window.admAp=function(id){const u=JSON.parse(localStorage.getItem(K+'user_'+id));if(u){u.ap=!0;u.vip=!0;localStorage.setItem(K+'user_'+id,JSON.stringify(u));}U=loadU();refreshUI();renderWallet();refreshAdmin();};
-    window.admAddBal=function(id){const amt=prompt('Enter amount (Tk):');if(!amt||isNaN(amt)||parseFloat(amt)<=0)return;const u=JSON.parse(localStorage.getItem(K+'user_'+id));if(u){u.bal=(u.bal||0)+parseFloat(amt);u.tx=u.tx||[];u.tx.unshift({ty:'credit',am:parseFloat(amt),ds:'Admin added',dt:new Date().toISOString()});localStorage.setItem(K+'user_'+id,JSON.stringify(u));}U=loadU();refreshUI();renderWallet();refreshAdmin();alert('✅ Added '+amt+' Tk!');};
-    window.admBlk=function(id){const u=JSON.parse(localStorage.getItem(K+'user_'+id));if(u){u.ap=!1;u.vip=!1;localStorage.setItem(K+'user_'+id,JSON.stringify(u));}U=loadU();refreshUI();renderWallet();refreshAdmin();};
-    function sAdmAd(){AD.adT=document.getElementById('admAdT').value;AD.adS=document.getElementById('admAdS').value;AD.adLm=parseInt(document.getElementById('admAdLm').value)||10;AD.adE=parseFloat(document.getElementById('admAdE').value)||1;AD.ccs=parseInt(document.getElementById('admCcs').value)||30;AD.adL=[document.getElementById('admAdL1').value,document.getElementById('admAdL2').value,document.getElementById('admAdL3').value];AD.pc=document.getElementById('admPc').value;saveAD();renderAd();alert('✅ Saved!');}window.sAdmAd=sAdmAd;
-    function sAdmTsk(){AD.jt=AD.jt||[{},{},{},{}];for(let i=0;i<4;i++){AD.jt[i]={t:document.getElementById('admTt'+i)?.value||'',l:document.getElementById('admTl'+i)?.value||'',r:parseInt(document.getElementById('admTr'+i)?.value)||0};}saveAD();renderTasks();alert('✅ Saved!');}window.sAdmTsk=sAdmTsk;
-    function sAdmBon(){AD.db={en:document.getElementById('admDbEn').checked,am:parseFloat(document.getElementById('admDbAm').value)||0.25,im:parseInt(document.getElementById('admDbIm').value)||5,link:document.getElementById('admDbLk').value};saveAD();renderBonus();alert('✅ Saved!');}window.sAdmBon=sAdmBon;
-    function sAdmSpin(){AD.spinRewards=[];for(let i=0;i<7;i++){AD.spinRewards.push(parseFloat(document.getElementById('admSpin'+i).value)||0.10);}saveAD();renderSpinWheel();alert('✅ Spin rewards saved!');}window.sAdmSpin=sAdmSpin;
-    function addAdmSb(){AD.sb=AD.sb||[];AD.sb.push({title:'Bonus',link:'',amount:1,maxClaims:1});saveAD();refreshAdmin();}window.addAdmSb=addAdmSb;
-    window.admRmSb=function(i){AD.sb.splice(i,1);saveAD();refreshAdmin();};
-    function sAdmSb(){AD.sb=AD.sb||[];const c=AD.sb.length;for(let i=0;i<c;i++){AD.sb[i]={title:document.getElementById('admSbt'+i)?.value||'',link:document.getElementById('admSbl'+i)?.value||'',amount:parseFloat(document.getElementById('admSba'+i)?.value)||0,maxClaims:parseInt(document.getElementById('admSbm'+i)?.value)||1};}saveAD();renderBonus();alert('✅ Saved!');}window.sAdmSb=sAdmSb;
-    function sAdmRef(){AD.rt=document.getElementById('admRt').value;AD.rr=parseInt(document.getElementById('admRr').value)||5;AD.rl=document.getElementById('admRl').value;saveAD();refreshUI();alert('✅ Saved!');}window.sAdmRef=sAdmRef;
-    function sAdmIc(){AD.bi=document.getElementById('admBi').value;AD.ni=document.getElementById('admNi').value;saveAD();renderWithdraw();alert('✅ Saved!');}window.sAdmIc=sAdmIc;
-    function sAdmSup(){AD.supportLink=document.getElementById('admSupportLink').value;AD.videoURL=document.getElementById('admVideoURL').value;saveAD();refreshUI();alert('✅ Saved!');}window.sAdmSup=sAdmSup;
-    function sAdmSet(){AD.ar={a:parseInt(document.getElementById('admAa').value)||10,r:parseInt(document.getElementById('admAr').value)||3};AD.mw=parseInt(document.getElementById('admMw').value)||50;saveAD();renderWithdraw();alert('✅ Saved!');}window.sAdmSet=sAdmSet;
-    window.admApWd=function(i){const wd=gWds();if(wd[i]){wd[i].st='approved';saveWds(wd);const u=JSON.parse(localStorage.getItem(K+'user_'+wd[i].uid));if(u&&u.tx){const tx=u.tx.find(t=>t.st==='pending'&&t.ty==='debit'&&t.am===wd[i].am);if(tx){tx.st='approved';localStorage.setItem(K+'user_'+wd[i].uid,JSON.stringify(u));}}refreshAdmin();U=loadU();renderTx();}};
-    window.admRjWd=function(i){const wd=gWds();if(wd[i]&&wd[i].st==='pending'){wd[i].st='rejected';saveWds(wd);const u=JSON.parse(localStorage.getItem(K+'user_'+wd[i].uid));if(u){u.bal=(u.bal||0)+wd[i].am;u.tx=u.tx||[];const tx=u.tx.find(t=>t.st==='pending'&&t.ty==='debit'&&t.am===wd[i].am);if(tx){tx.st='rejected';}u.tx.unshift({ty:'credit',am:wd[i].am,ds:'Refund: '+wd[i].mt.toUpperCase(),dt:new Date().toISOString()});localStorage.setItem(K+'user_'+wd[i].uid,JSON.stringify(u));}refreshAdmin();U=loadU();renderTx();renderWallet();alert('❌ Rejected! '+wd[i].am+' Tk refunded.');}};
-    function chAdmPass(){const np=document.getElementById('admNewPass').value.trim();if(!np||np.length<3){alert('Too short!');return;}localStorage.setItem(K+'admin_pass',np);document.getElementById('admNewPass').value='';alert('✅ Changed!');}window.chAdmPass=chAdmPass;
-    function sAdmBC(){const m=document.getElementById('admBm').value.trim();if(!m){alert('Write!');return;}AD.ms=AD.ms||[];AD.ms.push({text:m,date:new Date().toISOString()});saveAD();document.getElementById('admBm').value='';renderInbox();alert('✅ Sent!');}window.sAdmBC=sAdmBC;
+        <!-- Manage Single Ad with 3 Portal Codes -->
+        <div class="admin-section">
+            <h4>📺 Manage Single Ad (3 Portal Codes)</h4>
+            <div class="row-2">
+                <div class="form-group">
+                    <label>Ad Name</label>
+                    <input type="text" id="adminAdName" placeholder="Tonur Ad" />
+                </div>
+                <div class="form-group">
+                    <label>Reward (TRX)</label>
+                    <input type="number" id="adminAdReward" step="0.00001" min="0" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Ad Description</label>
+                <input type="text" id="adminAdDesc" placeholder="Watch this ad to earn rewards." />
+            </div>
+            <div class="row-3">
+                <div class="form-group">
+                    <label>Portal Code 1 (AdGram)</label>
+                    <input type="text" id="adminAdPortal1" placeholder="AGRAM123" />
+                </div>
+                <div class="form-group">
+                    <label>Portal Code 2 (Monetize)</label>
+                    <input type="text" id="adminAdPortal2" placeholder="MGRAM456" />
+                </div>
+                <div class="form-group">
+                    <label>Portal Code 3</label>
+                    <input type="text" id="adminAdPortal3" placeholder="MON789" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Ad Image URL (optional, leave blank for gradient)</label>
+                <input type="url" id="adminAdImage" placeholder="https://..." />
+            </div>
+            <div class="form-group">
+                <label>Daily Limit per Ad</label>
+                <input type="number" id="adminAdLimitPerAd" step="1" min="1" value="1" />
+            </div>
+            <button class="admin-btn" onclick="saveAdSettings()">Save Ad Settings</button>
+        </div>
 
-    // Init
-    AD=loadAD();const uid=localStorage.getItem(K+'uid');
-    if(uid){U=loadU();if(U){showApp();initApp();}else{renderAuth('login');}}else{renderAuth('login');}
-    document.addEventListener('focusin',()=>{inf=!0;});document.addEventListener('focusout',()=>{setTimeout(()=>inf=!1,300);});
-    </script>
+        <!-- Leaderboard (Telegram Users) -->
+        <div class="admin-section">
+            <h4>🏆 Manage Leaderboard (Telegram)</h4>
+            <div class="row-2">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="adminLbName" placeholder="@username" />
+                </div>
+                <div class="form-group">
+                    <label>Score (TRX)</label>
+                    <input type="number" id="adminLbScore" step="0.01" min="0" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Avatar URL (optional)</label>
+                <input type="url" id="adminLbAvatar" placeholder="https://..." />
+            </div>
+            <button class="admin-btn" onclick="addLeaderboardUser()">+ Add User</button>
+            <div class="admin-list mt-8" id="adminLbList"></div>
+        </div>
+
+        <!-- Users Management -->
+        <div class="admin-section">
+            <h4>👥 Users Management</h4>
+            <div class="form-group">
+                <label>Total Users: <span id="totalUsersDisplay">0</span></label>
+            </div>
+            <div class="row-2">
+                <div class="form-group">
+                    <label>Search User (ID)</label>
+                    <input type="text" id="adminSearchUser" placeholder="User ID" />
+                </div>
+                <div class="form-group">
+                    <label>Add Coins (TRX)</label>
+                    <input type="number" id="adminAddCoins" step="0.00001" min="0" />
+                </div>
+            </div>
+            <button class="admin-btn" onclick="addCoinsToUser()">Add Coins to User</button>
+            <div class="admin-list mt-8" id="adminUserList"></div>
+        </div>
+
+        <!-- Withdraw Requests with Approve -->
+        <div class="admin-section">
+            <h4>💰 Withdraw Requests</h4>
+            <div class="admin-list" id="adminWithdrawList"></div>
+        </div>
+
+        <!-- Send Message to Users -->
+        <div class="admin-section">
+            <h4>📨 Broadcast Message</h4>
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" id="adminMsgTitle" placeholder="Subject" />
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea id="adminMsgText" rows="3" placeholder="Write your message..."></textarea>
+            </div>
+            <button class="admin-btn" onclick="sendBroadcast()">Send to All Users</button>
+        </div>
+
+        <!-- Support Settings -->
+        <div class="admin-section">
+            <h4>🛟 Support Settings</h4>
+            <div class="form-group">
+                <label>Support Link (URL)</label>
+                <input type="url" id="adminSupportLink" placeholder="https://t.me/..." />
+            </div>
+            <div class="form-group">
+                <label>Support Text (shown to users)</label>
+                <input type="text" id="adminSupportText" placeholder="Contact us on Telegram" />
+            </div>
+            <button class="admin-btn" onclick="saveSupportSettings()">Save Support</button>
+        </div>
+
+        <!-- Change Password -->
+        <div class="admin-section">
+            <h4>🔐 Change Admin Password</h4>
+            <div class="row-2">
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="text" id="adminNewPass" placeholder="New password" />
+                </div>
+                <div class="form-group">
+                    <label>Confirm</label>
+                    <input type="text" id="adminConfirmPass" placeholder="Confirm" />
+                </div>
+            </div>
+            <button class="admin-btn" onclick="changeAdminPassword()">Update Password</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MAILBOX MODAL ===== -->
+<div class="modal-overlay" id="mailboxModal">
+    <div class="modal-box" style="text-align:left;max-width:420px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <h3 style="margin:0;"><i class="fas fa-envelope text-primary"></i> Mailbox</h3>
+            <button onclick="closeMailbox()" style="background:none;border:none;font-size:22px;color:var(--text-light);cursor:pointer;">✕</button>
+        </div>
+        <div id="mailboxList" style="max-height:320px;overflow-y:auto;"></div>
+    </div>
+</div>
+
+<!-- ===== SUPPORT MODAL ===== -->
+<div class="modal-overlay" id="supportModal">
+    <div class="modal-box" style="text-align:left;max-width:400px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <h3 style="margin:0;"><i class="fas fa-headset text-primary"></i> Support</h3>
+            <button onclick="closeSupport()" style="background:none;border:none;font-size:22px;color:var(--text-light);cursor:pointer;">✕</button>
+        </div>
+        <p style="color:var(--text-secondary);font-size:14px;" id="supportModalText">Contact us via the link below:</p>
+        <a href="#" id="supportModalLink" target="_blank" style="display:block;padding:12px;background:var(--primary-light);border-radius:8px;color:var(--primary);font-weight:600;text-align:center;text-decoration:none;margin:8px 0 4px;">
+            <i class="fas fa-external-link-alt"></i> Open Support
+        </a>
+        <p style="font-size:12px;color:var(--text-light);text-align:center;margin-top:6px;">We'll respond within 24 hours.</p>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    //  STATE
+    // ============================================================
+    const DEFAULT_STATE = {
+        tonurBalance: 0,
+        usdtRate: 0.0125,
+        minWithdraw: 10,
+        dailyAdLimit: 1,
+        adCooldown: 30,
+        refBonus: 0.005,
+        refRequired: 3,
+        adminPassword: 'tam91207',
+        tasks: [
+            { id: 't1', title: 'Visit Tonur Website', reward: 0.002, url: 'https://tonur.io', completed: false },
+            { id: 't2', title: 'Follow on X', reward: 0.003, url: 'https://x.com', completed: false },
+            { id: 't3', title: 'Join Telegram', reward: 0.004, url: 'https://t.me', completed: false },
+        ],
+        ad: {
+            name: 'Tonur Premium Ad',
+            description: 'Watch this ad to earn rewards.',
+            reward: 0.001,
+            portal1: 'AGRAM123',
+            portal2: 'MGRAM456',
+            portal3: 'MON789',
+            image: '',
+            limit: 1,
+        },
+        referrals: [],
+        withdrawRequests: [],
+        bonusClaimed: {},
+        adWatchLog: {},
+        lastAdWatch: 0,
+        mailbox: [],
+        leaderboard: [],
+        supportLink: 'https://t.me/tonur_support',
+        supportText: 'Need help? Contact our support team.',
+        referralCode: null,
+        adWatchDate: null,
+        bonusDate: null,
+        users: {},
+        userIds: [],
+        userAvatars: {},
+        userIdCounter: 0,
+    };
+
+    let state = null;
+    let currentPage = 'home';
+    let userId = '';
+
+    // ============================================================
+    //  INIT
+    // ============================================================
+    function init() {
+        const saved = localStorage.getItem('tonur_state');
+        if (saved) {
+            try {
+                state = JSON.parse(saved);
+                for (const k in DEFAULT_STATE) {
+                    if (!(k in state)) state[k] = DEFAULT_STATE[k];
+                }
+            } catch (e) {
+                state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+            }
+        } else {
+            state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+        }
+
+        // Ensure ad object
+        if (!state.ad) state.ad = JSON.parse(JSON.stringify(DEFAULT_STATE.ad));
+        if (state.ad.portal3 === undefined) state.ad.portal3 = 'MON789';
+
+        // Ensure users
+        if (!state.users) state.users = {};
+        if (!state.userIds) state.userIds = [];
+        if (!state.userAvatars) state.userAvatars = {};
+        if (state.userIdCounter === undefined) state.userIdCounter = 0;
+
+        // Generate unique user ID
+        if (!userId) {
+            const savedId = localStorage.getItem('tonur_userId');
+            if (savedId && state.users[savedId]) {
+                userId = savedId;
+            } else {
+                state.userIdCounter = (state.userIdCounter || 0) + 1;
+                userId = 'TON' + String(state.userIdCounter).padStart(6, '0');
+                localStorage.setItem('tonur_userId', userId);
+            }
+        }
+
+        // Add current user if not exists
+        if (!state.users[userId]) {
+            const avatarNum = Math.floor(Math.random() * 70) + 1;
+            state.users[userId] = {
+                balance: state.tonurBalance || 0,
+                referrals: state.referrals || [],
+                avatar: 'https://i.pravatar.cc/150?img=' + avatarNum,
+                joined: new Date().toISOString()
+            };
+            state.userAvatars[userId] = state.users[userId].avatar;
+            if (!state.userIds.includes(userId)) {
+                state.userIds.push(userId);
+            }
+        }
+
+        // Sync balance
+        state.tonurBalance = state.users[userId].balance || 0;
+        state.referrals = state.users[userId].referrals || [];
+
+        // Ensure tasks
+        state.tasks.forEach(t => { if (t.completed === undefined) t.completed = false; });
+
+        if (!state.referralCode) {
+            state.referralCode = 'REF' + userId.slice(-6);
+        }
+
+        const today = getToday();
+        if (state.adWatchDate !== today) {
+            state.adWatchLog = {};
+            state.adWatchDate = today;
+        }
+        if (state.bonusDate !== today) {
+            state.bonusClaimed = {};
+            state.bonusDate = today;
+        }
+
+        saveState();
+        renderAll();
+        updateUI();
+        createRainDrops();
+        createRainDropsFull();
+    }
+
+    function getToday() {
+        return new Date().toISOString().slice(0, 10);
+    }
+
+    function saveState() {
+        if (state.users[userId]) {
+            state.users[userId].balance = state.tonurBalance;
+            state.users[userId].referrals = state.referrals;
+        }
+        localStorage.setItem('tonur_state', JSON.stringify(state));
+        localStorage.setItem('tonur_userId', userId);
+    }
+
+    // ===== RAIN DROPS =====
+    function createRainDrops() {
+        const container = document.getElementById('adImageDisplay');
+        if (!container) return;
+        // Clear existing drops
+        container.querySelectorAll('.rain-drop').forEach(el => el.remove());
+        for (let i = 0; i < 30; i++) {
+            const drop = document.createElement('div');
+            drop.className = 'rain-drop';
+            drop.style.left = Math.random() * 100 + '%';
+            drop.style.height = (Math.random() * 15 + 5) + 'px';
+            drop.style.animationDuration = (Math.random() * 0.8 + 0.6) + 's';
+            drop.style.animationDelay = (Math.random() * 2) + 's';
+            drop.style.opacity = Math.random() * 0.5 + 0.2;
+            container.appendChild(drop);
+        }
+    }
+
+    function createRainDropsFull() {
+        const container = document.getElementById('adImageDisplayFull');
+        if (!container) return;
+        container.querySelectorAll('.rain-drop').forEach(el => el.remove());
+        for (let i = 0; i < 30; i++) {
+            const drop = document.createElement('div');
+            drop.className = 'rain-drop';
+            drop.style.left = Math.random() * 100 + '%';
+            drop.style.height = (Math.random() * 15 + 5) + 'px';
+            drop.style.animationDuration = (Math.random() * 0.8 + 0.6) + 's';
+            drop.style.animationDelay = (Math.random() * 2) + 's';
+            drop.style.opacity = Math.random() * 0.5 + 0.2;
+            container.appendChild(drop);
+        }
+    }
+
+    // ============================================================
+    //  RENDER
+    // ============================================================
+    function renderAll() {
+        renderUserProfile();
+        renderBalance();
+        renderBonusGrid('bonusGrid');
+        renderBonusGrid('profileBonusGrid');
+        renderHomeTasks();
+        renderFullTasks();
+        renderSingleAd('homeAdSingle', 'home');
+        renderSingleAd('fullAdSingle', 'full');
+        renderWithdrawMethods();
+        renderReferral();
+        renderLeaderboard();
+        renderAdminLists();
+        renderMailbox();
+        renderWithdrawRequests();
+        renderSupport();
+        renderUserList();
+        updateUI();
+        // Recreate rain drops after render
+        setTimeout(() => { createRainDrops(); createRainDropsFull(); }, 100);
+    }
+
+    function renderUserProfile() {
+        const avatar = state.users[userId]?.avatar || 'https://i.pravatar.cc/150?img=1';
+        const name = 'User ' + userId.slice(-6);
+        const refs = state.referrals.length;
+
+        document.getElementById('userAvatarImg').src = avatar;
+        document.getElementById('userAvatarImg2').src = avatar;
+        document.getElementById('userDisplayName').textContent = name;
+        document.getElementById('userDisplayName2').textContent = name;
+        document.getElementById('userDisplayId').textContent = 'ID: ' + userId;
+        document.getElementById('userDisplayId2').textContent = 'ID: ' + userId;
+        document.getElementById('userDisplayRefs').textContent = 'Referrals: ' + refs;
+        document.getElementById('userDisplayRefs2').textContent = 'Referrals: ' + refs;
+    }
+
+    function updateUI() {
+        document.getElementById('tonurBalance').textContent = state.tonurBalance.toFixed(5);
+        const usdt = state.tonurBalance * state.usdtRate;
+        document.getElementById('usdtBalance').textContent = usdt.toFixed(2);
+        document.getElementById('withdrawBalance').textContent = state.tonurBalance.toFixed(5) + ' TRX';
+        document.getElementById('withdrawUsdt').textContent = usdt.toFixed(2) + ' USDT';
+        document.getElementById('withdrawMinDisplay').textContent = state.minWithdraw.toFixed(2) + ' USDT';
+        document.getElementById('withdrawRefRequired').textContent = state.refRequired || 0;
+        document.getElementById('withdrawRefCount').textContent = state.referrals.length;
+
+        document.getElementById('refCount').textContent = state.referrals.length;
+        document.getElementById('refCount2').textContent = state.referrals.length;
+        const refEarn = state.referrals.length * state.refBonus;
+        document.getElementById('refEarnings').textContent = refEarn.toFixed(5);
+        document.getElementById('refEarnings2').textContent = refEarn.toFixed(5);
+
+        const code = state.referralCode || 'REF****';
+        document.getElementById('refCodeDisplay').textContent = code;
+        document.getElementById('refCodeDisplay2').textContent = code;
+
+        document.getElementById('mailDot').style.display = state.mailbox.length > 0 ? 'block' : 'none';
+
+        // Admin fields
+        document.getElementById('adminUsdtRate').value = state.usdtRate;
+        document.getElementById('adminMinWithdraw').value = state.minWithdraw;
+        document.getElementById('adminAdLimit').value = state.dailyAdLimit;
+        document.getElementById('adminAdCooldown').value = state.adCooldown;
+        document.getElementById('adminRefBonus').value = state.refBonus;
+        document.getElementById('adminRefRequired').value = state.refRequired || 0;
+        document.getElementById('adminSupportLink').value = state.supportLink || '';
+        document.getElementById('adminSupportText').value = state.supportText || '';
+        document.getElementById('totalUsersDisplay').textContent = state.userIds.length;
+
+        // Ad fields
+        const ad = state.ad || DEFAULT_STATE.ad;
+        document.getElementById('adminAdName').value = ad.name || '';
+        document.getElementById('adminAdReward').value = ad.reward || 0;
+        document.getElementById('adminAdDesc').value = ad.description || '';
+        document.getElementById('adminAdPortal1').value = ad.portal1 || '';
+        document.getElementById('adminAdPortal2').value = ad.portal2 || '';
+        document.getElementById('adminAdPortal3').value = ad.portal3 || '';
+        document.getElementById('adminAdImage').value = ad.image || '';
+        document.getElementById('adminAdLimitPerAd').value = ad.limit || 1;
+
+        renderUserProfile();
+    }
+
+    function renderBalance() { /* updated via updateUI */ }
+
+    function renderBonusGrid(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const days = [
+            { day: 1, reward: 0.001 },
+            { day: 2, reward: 0.002 },
+            { day: 3, reward: 0.003 },
+            { day: 4, reward: 0.005 },
+            { day: 5, reward: 0.008 },
+            { day: 6, reward: 0.012 },
+            { day: 7, reward: 0.020 },
+        ];
+        const today = getToday();
+        let html = '';
+        days.forEach(d => {
+            const key = 'day_' + d.day;
+            const claimed = state.bonusClaimed[key] === today;
+            const canClaim = !claimed && (d.day === 1 || state.bonusClaimed['day_' + (d.day - 1)] === today);
+            let cls = 'bonus-day';
+            if (claimed) cls += ' claimed';
+            else if (canClaim) cls += ' available';
+            else cls += ' locked';
+            const label = claimed ? '✓' : canClaim ? 'Claim' : '🔒';
+            html += `
+                <div class="${cls}" onclick="${canClaim ? `claimBonus(${d.day}, '${containerId}')` : ''}" style="${canClaim ? 'cursor:pointer;' : 'cursor:default;'}">
+                    <span class="day-label">Day ${d.day}</span>
+                    <span class="day-reward">${d.reward.toFixed(4)}</span>
+                    <span class="day-status">${label}</span>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderHomeTasks() {
+        const container = document.getElementById('homeTaskList');
+        const tasks = state.tasks.filter(t => !t.completed).slice(0, 3);
+        if (tasks.length === 0) {
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-check-circle text-green"></i><h4>All done!</h4><p>Check back for new tasks.</p></div>`;
+            return;
+        }
+        let html = '';
+        tasks.forEach(t => {
+            html += `
+                <div class="task-item" onclick="completeTask('${t.id}')">
+                    <div class="task-icon"><i class="fas fa-link"></i></div>
+                    <div class="task-info">
+                        <div class="task-title">${t.title}</div>
+                        <div class="task-desc">Reward: <span class="reward">${t.reward.toFixed(5)} TRX</span></div>
+                    </div>
+                    <div class="task-status">Earn</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderFullTasks() {
+        const container = document.getElementById('fullTaskList');
+        const tasks = state.tasks;
+        if (tasks.length === 0) {
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-tasks"></i><h4>No tasks</h4><p>Check back later.</p></div>`;
+            return;
+        }
+        let html = '';
+        tasks.forEach(t => {
+            const status = t.completed ? 'Completed' : 'Earn';
+            const cls = t.completed ? 'task-status completed' : 'task-status';
+            html += `
+                <div class="task-item" onclick="${t.completed ? '' : `completeTask('${t.id}')`}" style="${t.completed ? 'opacity:0.6;' : ''}">
+                    <div class="task-icon"><i class="fas fa-link"></i></div>
+                    <div class="task-info">
+                        <div class="task-title">${t.title}</div>
+                        <div class="task-desc">Reward: <span class="reward">${t.reward.toFixed(5)} TRX</span></div>
+                    </div>
+                    <div class="${cls}">${status}</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderSingleAd(containerId, type) {
+        const ad = state.ad || DEFAULT_STATE.ad;
+        const watched = state.adWatchLog['ad'] || 0;
+        const limit = ad.limit || 1;
+        const remaining = Math.max(0, limit - watched);
+        const isActive = remaining > 0;
+
+        const prefix = type === 'home' ? '' : 'Full';
+        const imageEl = document.getElementById('adImageDisplay' + prefix);
+        const imageText = document.getElementById('adImageText' + prefix);
+        const badge = document.getElementById('adBadge' + prefix);
+        const nameEl = document.getElementById('adNameDisplay' + prefix);
+        const descEl = document.getElementById('adDescDisplay' + prefix);
+        const rewardEl = document.getElementById('adRewardDisplay' + prefix);
+        const limitEl = document.getElementById('adLimitDisplay' + prefix);
+        const portalEl = document.getElementById('adPortalDisplay' + prefix);
+        const actionBtn = document.getElementById('adActionBtn' + prefix);
+
+        if (imageEl) {
+            if (ad.image) {
+                imageEl.innerHTML = `<img src="${ad.image}" alt="Ad" style="width:100%;height:100%;object-fit:cover;" />`;
+                // Re-add lightning and title
+                const flash = document.createElement('div');
+                flash.className = 'lightning-flash';
+                imageEl.appendChild(flash);
+                const titleSpan = document.createElement('div');
+                titleSpan.className = 'ad-title-animation';
+                titleSpan.id = 'adImageText' + prefix;
+                titleSpan.textContent = ad.name || 'Tonur Ad';
+                imageEl.appendChild(titleSpan);
+                const badgeSpan = document.createElement('span');
+                badgeSpan.className = 'ad-badge';
+                badgeSpan.id = 'adBadge' + prefix;
+                badgeSpan.textContent = isActive ? 'Active' : 'Done';
+                imageEl.appendChild(badgeSpan);
+            } else {
+                // Keep existing structure
+                const titleEl = document.getElementById('adImageText' + prefix);
+                if (titleEl) titleEl.textContent = ad.name || 'Tonur Ad';
+                const badgeEl = document.getElementById('adBadge' + prefix);
+                if (badgeEl) badgeEl.textContent = isActive ? 'Active' : 'Done';
+            }
+        }
+        if (badge) badge.textContent = isActive ? 'Active' : 'Done';
+        if (nameEl) nameEl.textContent = ad.name || 'Tonur Premium Ad';
+        if (descEl) descEl.textContent = ad.description || 'Watch this ad to earn rewards.';
+        if (rewardEl) rewardEl.textContent = `+${(ad.reward || 0).toFixed(5)} TRX`;
+        if (limitEl) limitEl.textContent = `${remaining} left today`;
+        if (portalEl) {
+            const p1 = ad.portal1 || 'N/A';
+            const p2 = ad.portal2 || 'N/A';
+            const p3 = ad.portal3 || 'N/A';
+            portalEl.innerHTML = `
+                <span>Portal1: ${p1}</span>
+                <span>Portal2: ${p2}</span>
+                <span>Portal3: ${p3}</span>
+            `;
+        }
+        if (actionBtn) {
+            actionBtn.disabled = !isActive;
+            actionBtn.innerHTML = isActive ? '<i class="fas fa-play"></i> Watch Now' : '<i class="fas fa-check"></i> Done for Today';
+        }
+
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.onclick = function(e) {
+                if (e.target.tagName !== 'BUTTON') {
+                    watchAd();
+                }
+            };
+        }
+        // Recreate rain drops
+        setTimeout(() => {
+            if (type === 'home') createRainDrops();
+            else createRainDropsFull();
+        }, 50);
+    }
+
+    function renderWithdrawMethods() {
+        const container = document.getElementById('withdrawMethods');
+        const methods = [
+            { id: 'usdt', name: 'USDT', icon: '💎' },
+            { id: 'bnb', name: 'BNB', icon: '🔶' },
+            { id: 'trx', name: 'TRX', icon: '🔷' },
+        ];
+        let html = '';
+        methods.forEach(m => {
+            html += `
+                <div class="withdraw-method active" onclick="selectWithdrawMethod('${m.id}')" id="wm_${m.id}">
+                    <span class="wm-icon">${m.icon}</span>
+                    <div class="wm-name">${m.name}</div>
+                    <div class="wm-min">Min ${state.minWithdraw.toFixed(2)} USDT</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderReferral() { /* updated via updateUI */ }
+
+    function renderLeaderboard() {
+        const container = document.getElementById('leaderboardList');
+        const entries = state.leaderboard || [];
+        if (entries.length === 0) {
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-users"></i><h4>No users yet</h4><p>Connect Telegram to see leaderboard.</p></div>`;
+            return;
+        }
+        const sorted = [...entries].sort((a, b) => b.score - a.score);
+        let html = '';
+        sorted.slice(0, 20).forEach((e, i) => {
+            let rankCls = 'rank';
+            if (i === 0) rankCls += ' gold';
+            else if (i === 1) rankCls += ' silver';
+            else if (i === 2) rankCls += ' bronze';
+            const avatarHtml = e.avatar ? `<img src="${e.avatar}" alt="avatar" />` : e.name.charAt(0);
+            html += `
+                <div class="leaderboard-item">
+                    <div class="${rankCls}">${i + 1}</div>
+                    <div class="lb-avatar">${avatarHtml}</div>
+                    <div class="lb-info">
+                        <div class="lb-name">${e.name}</div>
+                        <div class="lb-score">${e.score.toFixed(2)} TRX</div>
+                    </div>
+                    <div class="lb-reward">${i < 3 ? ['🥇','🥈','🥉'][i] : ''}</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderAdminLists() {
+        // Tasks
+        const taskContainer = document.getElementById('adminTaskList');
+        let tHtml = '';
+        state.tasks.forEach(t => {
+            tHtml += `<div class="list-item"><span>${t.title} (${t.reward.toFixed(5)} TRX)</span><button class="del-btn" onclick="deleteTask('${t.id}')">✕</button></div>`;
+        });
+        taskContainer.innerHTML = tHtml || '<div class="list-item" style="color:var(--text-light);">No tasks added.</div>';
+
+        // Leaderboard
+        const lbContainer = document.getElementById('adminLbList');
+        let lHtml = '';
+        (state.leaderboard || []).forEach((u, idx) => {
+            lHtml += `<div class="list-item"><span>${u.name} (${u.score.toFixed(2)} TRX)</span><button class="del-btn" onclick="deleteLeaderboardUser(${idx})">✕</button></div>`;
+        });
+        lbContainer.innerHTML = lHtml || '<div class="list-item" style="color:var(--text-light);">No users added.</div>';
+
+        // Withdraw requests
+        renderWithdrawRequests();
+    }
+
+    function renderWithdrawRequests() {
+        const container = document.getElementById('adminWithdrawList');
+        if (!container) return;
+        const requests = state.withdrawRequests || [];
+        if (requests.length === 0) {
+            container.innerHTML = '<div class="list-item" style="color:var(--text-light);">No withdrawal requests.</div>';
+            return;
+        }
+        let html = '';
+        requests.slice().reverse().forEach((r, idx) => {
+            const status = r.status || 'pending';
+            const statusLabel = status === 'completed' ? '✅ Completed' : '⏳ Pending';
+            const isPending = status !== 'completed';
+            html += `
+                <div class="list-item">
+                    <span>${r.amount.toFixed(2)} USDT → ${r.method} (${r.address.slice(0,10)}...)</span>
+                    <span style="display:flex;gap:6px;align-items:center;">
+                        <span style="font-size:11px;color:${status === 'completed' ? 'var(--green)' : 'var(--gold)'};">${statusLabel}</span>
+                        ${isPending ? `<button class="approve-btn" onclick="approveWithdraw(${idx})">✓ Approve</button>` : ''}
+                        ${isPending ? `<button class="del-btn" onclick="deleteWithdraw(${idx})">✕</button>` : ''}
+                    </span>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderMailbox() {
+        const container = document.getElementById('mailboxList');
+        if (!container) return;
+        if (state.mailbox.length === 0) {
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><h4>No messages</h4><p>Check back later.</p></div>`;
+            return;
+        }
+        let html = '';
+        state.mailbox.slice().reverse().forEach(m => {
+            html += `
+                <div class="mailbox-item">
+                    <div class="mail-title">${m.title || 'Message'}</div>
+                    <div class="mail-text">${m.text || ''}</div>
+                    <div class="mail-time">${m.time || 'Just now'}</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderSupport() {
+        document.getElementById('supportText').textContent = state.supportText || 'Need help? Contact our support team.';
+        document.getElementById('supportLink').href = state.supportLink || '#';
+        document.getElementById('supportModalText').textContent = state.supportText || 'Contact us via the link below:';
+        document.getElementById('supportModalLink').href = state.supportLink || '#';
+    }
+
+    function renderUserList() {
+        const container = document.getElementById('adminUserList');
+        if (!container) return;
+        const users = state.userIds || [];
+        if (users.length === 0) {
+            container.innerHTML = '<div class="list-item" style="color:var(--text-light);">No users registered.</div>';
+            return;
+        }
+        let html = '';
+        users.slice(0, 30).forEach(uid => {
+            const u = state.users[uid] || { balance: 0, referrals: [] };
+            const refCount = u.referrals ? u.referrals.length : 0;
+            html += `<div class="list-item"><span>${uid} (${u.balance.toFixed(2)} TRX, ${refCount} refs)</span></div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    // ============================================================
+    //  ACTIONS
+    // ============================================================
+    function completeTask(taskId) {
+        const task = state.tasks.find(t => t.id === taskId);
+        if (!task || task.completed) return;
+        if (task.url) window.open(task.url, '_blank');
+        showToast('Opening task...', 'info');
+        setTimeout(() => {
+            task.completed = true;
+            state.tonurBalance += task.reward;
+            saveState();
+            renderAll();
+            updateUI();
+            showToast(`+${task.reward.toFixed(5)} TRX earned!`, 'success');
+            addMailbox('Task Completed', `You earned ${task.reward.toFixed(5)} TRX from "${task.title}"`);
+        }, 800);
+    }
+
+    function watchAd() {
+        const ad = state.ad || DEFAULT_STATE.ad;
+        const now = Date.now();
+        if (now - state.lastAdWatch < state.adCooldown * 1000) {
+            const wait = Math.ceil((state.adCooldown * 1000 - (now - state.lastAdWatch)) / 1000);
+            showToast(`Please wait ${wait}s before watching again.`, 'warning');
+            return;
+        }
+
+        const watched = state.adWatchLog['ad'] || 0;
+        const limit = ad.limit || 1;
+        if (watched >= limit) {
+            showToast(`Daily limit reached. Come back tomorrow!`, 'warning');
+            return;
+        }
+
+        const totalWatched = Object.values(state.adWatchLog).reduce((a, b) => a + b, 0);
+        if (totalWatched >= state.dailyAdLimit) {
+            showToast(`Daily ad limit (${state.dailyAdLimit}) reached.`, 'warning');
+            return;
+        }
+
+        showToast('Watching ad...', 'info');
+        setTimeout(() => {
+            state.adWatchLog['ad'] = (state.adWatchLog['ad'] || 0) + 1;
+            state.lastAdWatch = now;
+            state.tonurBalance += ad.reward || 0;
+            saveState();
+            renderAll();
+            updateUI();
+            showToast(`+${(ad.reward || 0).toFixed(5)} TRX earned from ad!`, 'success');
+            addMailbox('Ad Reward', `You earned ${(ad.reward || 0).toFixed(5)} TRX from watching "${ad.name || 'Ad'}"`);
+        }, 1500);
+    }
+
+    function claimBonus(day, containerId) {
+        const key = 'day_' + day;
+        if (state.bonusClaimed[key] === getToday()) {
+            showToast('Already claimed today!', 'warning');
+            return;
+        }
+        if (day > 1 && state.bonusClaimed['day_' + (day - 1)] !== getToday()) {
+            showToast('Claim previous day first!', 'warning');
+            return;
+        }
+        const rewards = { 1:0.001, 2:0.002, 3:0.003, 4:0.005, 5:0.008, 6:0.012, 7:0.020 };
+        const reward = rewards[day] || 0;
+        state.bonusClaimed[key] = getToday();
+        state.tonurBalance += reward;
+        saveState();
+        renderAll();
+        updateUI();
+        showToast(`🎉 Day ${day} bonus: +${reward.toFixed(5)} TRX!`, 'success');
+        addMailbox('Daily Bonus', `You claimed Day ${day} bonus of ${reward.toFixed(5)} TRX!`);
+    }
+
+    function copyReferral() {
+        const code = state.referralCode || 'REF****';
+        navigator.clipboard.writeText(code).then(() => {
+            showToast('Referral code copied!', 'success');
+        }).catch(() => {
+            const input = document.createElement('input');
+            input.value = code;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            showToast('Referral code copied!', 'success');
+        });
+    }
+
+    function selectWithdrawMethod(methodId) {
+        document.querySelectorAll('.withdraw-method').forEach(el => el.classList.remove('active'));
+        document.getElementById('wm_' + methodId).classList.add('active');
+    }
+
+    function submitWithdraw() {
+        const amount = parseFloat(document.getElementById('withdrawAmount').value);
+        const address = document.getElementById('withdrawAddress').value.trim();
+        if (!amount || amount <= 0) {
+            showToast('Please enter a valid amount.', 'error');
+            return;
+        }
+        const usdtBalance = state.tonurBalance * state.usdtRate;
+        if (amount > usdtBalance) {
+            showToast('Insufficient USDT balance.', 'error');
+            return;
+        }
+        if (amount < state.minWithdraw) {
+            showToast(`Minimum withdrawal is ${state.minWithdraw.toFixed(2)} USDT.`, 'error');
+            return;
+        }
+        const refRequired = state.refRequired || 0;
+        if (state.referrals.length < refRequired) {
+            showToast(`You need ${refRequired} referrals to withdraw. You have ${state.referrals.length}.`, 'error');
+            return;
+        }
+        if (!address) {
+            showToast('Please enter a wallet address.', 'error');
+            return;
+        }
+
+        const activeMethod = document.querySelector('.withdraw-method.active');
+        const methodName = activeMethod ? activeMethod.querySelector('.wm-name').textContent : 'USDT';
+
+        const tonAmount = amount / state.usdtRate;
+        state.tonurBalance -= tonAmount;
+
+        state.withdrawRequests = state.withdrawRequests || [];
+        state.withdrawRequests.push({
+            amount: amount,
+            address: address,
+            method: methodName,
+            date: new Date().toISOString(),
+            status: 'pending',
+            userId: userId
+        });
+        saveState();
+        renderAll();
+        updateUI();
+        document.getElementById('withdrawAmount').value = '';
+        document.getElementById('withdrawAddress').value = '';
+        showToast(`Withdrawal of ${amount.toFixed(2)} USDT requested!`, 'success');
+        addMailbox('Withdrawal Request', `You requested ${amount.toFixed(2)} USDT to ${methodName} (${address})`);
+    }
+
+    function approveWithdraw(index) {
+        const requests = state.withdrawRequests || [];
+        if (requests[index] && requests[index].status === 'pending') {
+            requests[index].status = 'completed';
+            saveState();
+            renderAll();
+            updateUI();
+            showToast('Withdrawal approved!', 'success');
+            const req = requests[index];
+            addMailbox('Withdrawal Approved', `Your withdrawal of ${req.amount.toFixed(2)} USDT to ${req.method} has been approved.`);
+        }
+    }
+
+    function deleteWithdraw(index) {
+        const requests = state.withdrawRequests || [];
+        if (requests[index]) {
+            requests.splice(index, 1);
+            saveState();
+            renderAll();
+            updateUI();
+            showToast('Withdrawal request deleted.', 'info');
+        }
+    }
+
+    function addMailbox(title, text) {
+        state.mailbox.push({ title, text, time: new Date().toLocaleString() });
+        saveState();
+        renderMailbox();
+        updateUI();
+    }
+
+    // ============================================================
+    //  ADMIN FUNCTIONS
+    // ============================================================
+    function triggerAdminPrompt() {
+        document.getElementById('adminPrompt').classList.add('open');
+        document.getElementById('adminPasswordInput').value = '';
+        document.getElementById('adminPasswordInput').focus();
+    }
+
+    function closeAdminPrompt() {
+        document.getElementById('adminPrompt').classList.remove('open');
+    }
+
+    function verifyAdminPassword() {
+        const input = document.getElementById('adminPasswordInput').value.trim();
+        if (input === state.adminPassword) {
+            closeAdminPrompt();
+            document.getElementById('adminPanel').classList.add('open');
+            renderAdminLists();
+            updateUI();
+        } else {
+            showToast('Incorrect code!', 'error');
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('adminPasswordInput').focus();
+        }
+    }
+
+    function closeAdminPanel() {
+        document.getElementById('adminPanel').classList.remove('open');
+    }
+
+    function saveAdminSettings() {
+        const rate = parseFloat(document.getElementById('adminUsdtRate').value);
+        const minWithdraw = parseFloat(document.getElementById('adminMinWithdraw').value);
+        const adLimit = parseInt(document.getElementById('adminAdLimit').value);
+        const cooldown = parseInt(document.getElementById('adminAdCooldown').value);
+        const refBonus = parseFloat(document.getElementById('adminRefBonus').value);
+        const refRequired = parseInt(document.getElementById('adminRefRequired').value);
+
+        if (!isNaN(rate) && rate >= 0) state.usdtRate = rate;
+        if (!isNaN(minWithdraw) && minWithdraw >= 0) state.minWithdraw = minWithdraw;
+        if (!isNaN(adLimit) && adLimit >= 0) state.dailyAdLimit = adLimit;
+        if (!isNaN(cooldown) && cooldown >= 0) state.adCooldown = cooldown;
+        if (!isNaN(refBonus) && refBonus >= 0) state.refBonus = refBonus;
+        if (!isNaN(refRequired) && refRequired >= 0) state.refRequired = refRequired;
+
+        saveState();
+        renderAll();
+        updateUI();
+        showToast('Settings saved!', 'success');
+    }
+
+    function addTask() {
+        const title = document.getElementById('adminTaskTitle').value.trim();
+        const reward = parseFloat(document.getElementById('adminTaskReward').value);
+        const url = document.getElementById('adminTaskUrl').value.trim();
+        if (!title || isNaN(reward) || reward < 0) {
+            showToast('Please enter a valid title and reward.', 'error');
+            return;
+        }
+        state.tasks.push({ id: 't_' + Date.now(), title, reward, url: url || '#', completed: false });
+        saveState();
+        renderAll();
+        updateUI();
+        document.getElementById('adminTaskTitle').value = '';
+        document.getElementById('adminTaskReward').value = '';
+        document.getElementById('adminTaskUrl').value = '';
+        showToast('Task added!', 'success');
+    }
+
+    function deleteTask(id) {
+        state.tasks = state.tasks.filter(t => t.id !== id);
+        saveState();
+        renderAll();
+        updateUI();
+        showToast('Task deleted.', 'info');
+    }
+
+    function saveAdSettings() {
+        const name = document.getElementById('adminAdName').value.trim();
+        const reward = parseFloat(document.getElementById('adminAdReward').value);
+        const desc = document.getElementById('adminAdDesc').value.trim();
+        const portal1 = document.getElementById('adminAdPortal1').value.trim();
+        const portal2 = document.getElementById('adminAdPortal2').value.trim();
+        const portal3 = document.getElementById('adminAdPortal3').value.trim();
+        const image = document.getElementById('adminAdImage').value.trim();
+        const limit = parseInt(document.getElementById('adminAdLimitPerAd').value) || 1;
+
+        state.ad = {
+            name: name || 'Tonur Premium Ad',
+            reward: isNaN(reward) ? 0.001 : reward,
+            description: desc || 'Watch this ad to earn rewards.',
+            portal1: portal1 || '',
+            portal2: portal2 || '',
+            portal3: portal3 || '',
+            image: image || '',
+            limit: limit
+        };
+        saveState();
+        renderAll();
+        updateUI();
+        showToast('Ad settings saved!', 'success');
+    }
+
+    function addLeaderboardUser() {
+        const name = document.getElementById('adminLbName').value.trim();
+        const score = parseFloat(document.getElementById('adminLbScore').value);
+        const avatar = document.getElementById('adminLbAvatar').value.trim();
+        if (!name || isNaN(score)) {
+            showToast('Please enter a valid name and score.', 'error');
+            return;
+        }
+        state.leaderboard = state.leaderboard || [];
+        state.leaderboard.push({ name, score, avatar: avatar || '' });
+        saveState();
+        renderAll();
+        updateUI();
+        document.getElementById('adminLbName').value = '';
+        document.getElementById('adminLbScore').value = '';
+        document.getElementById('adminLbAvatar').value = '';
+        showToast('Leaderboard user added!', 'success');
+    }
+
+    function deleteLeaderboardUser(index) {
+        state.leaderboard.splice(index, 1);
+        saveState();
+        renderAll();
+        updateUI();
+        showToast('User removed.', 'info');
+    }
+
+    function addCoinsToUser() {
+        const search = document.getElementById('adminSearchUser').value.trim().toUpperCase();
+        const amount = parseFloat(document.getElementById('adminAddCoins').value);
+        if (!search || isNaN(amount) || amount <= 0) {
+            showToast('Please enter a valid user ID and amount.', 'error');
+            return;
+        }
+        let found = false;
+        for (const uid of state.userIds) {
+            if (uid.includes(search) || search.includes(uid)) {
+                if (state.users[uid]) {
+                    state.users[uid].balance = (state.users[uid].balance || 0) + amount;
+                    if (uid === userId) state.tonurBalance = state.users[uid].balance;
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found) {
+            showToast('User not found. Try full ID like TON000001', 'error');
+            return;
+        }
+        saveState();
+        renderAll();
+        updateUI();
+        showToast(`Added ${amount.toFixed(5)} TRX to user.`, 'success');
+        document.getElementById('adminSearchUser').value = '';
+        document.getElementById('adminAddCoins').value = '';
+    }
+
+    function sendBroadcast() {
+        const title = document.getElementById('adminMsgTitle').value.trim();
+        const text = document.getElementById('adminMsgText').value.trim();
+        if (!title || !text) {
+            showToast('Please enter both subject and message.', 'error');
+            return;
+        }
+        addMailbox('📢 ' + title, text);
+        showToast('Broadcast sent to all users!', 'success');
+        document.getElementById('adminMsgTitle').value = '';
+        document.getElementById('adminMsgText').value = '';
+    }
+
+    function saveSupportSettings() {
+        const link = document.getElementById('adminSupportLink').value.trim();
+        const text = document.getElementById('adminSupportText').value.trim();
+        state.supportLink = link || '#';
+        state.supportText = text || 'Need help? Contact our support team.';
+        saveState();
+        renderAll();
+        updateUI();
+        showToast('Support settings saved!', 'success');
+    }
+
+    function changeAdminPassword() {
+        const newPass = document.getElementById('adminNewPass').value.trim();
+        const confirm = document.getElementById('adminConfirmPass').value.trim();
+        if (!newPass || newPass.length < 4) {
+            showToast('Password must be at least 4 characters.', 'error');
+            return;
+        }
+        if (newPass !== confirm) {
+            showToast('Passwords do not match.', 'error');
+            return;
+        }
+        state.adminPassword = newPass;
+        saveState();
+        document.getElementById('adminNewPass').value = '';
+        document.getElementById('adminConfirmPass').value = '';
+        showToast('Admin password updated!', 'success');
+    }
+
+    // ============================================================
+    //  NAVIGATION & MODALS
+    // ============================================================
+    function navigateTo(page) {
+        currentPage = page;
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-' + page).classList.add('active');
+        document.querySelectorAll('.bottom-nav .nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelector(`.bottom-nav .nav-item[data-page="${page}"]`).classList.add('active');
+        document.getElementById('mainContent').scrollTop = 0;
+        if (page === 'profile') renderLeaderboard();
+        renderAll();
+    }
+
+    function openMailbox() {
+        renderMailbox();
+        document.getElementById('mailboxModal').classList.add('open');
+    }
+    function closeMailbox() {
+        document.getElementById('mailboxModal').classList.remove('open');
+    }
+    function openSupport() {
+        renderSupport();
+        document.getElementById('supportModal').classList.add('open');
+    }
+    function closeSupport() {
+        document.getElementById('supportModal').classList.remove('open');
+    }
+
+    function showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = 'toast ' + type;
+        void toast.offsetWidth;
+        toast.classList.add('show');
+        clearTimeout(toast._hide);
+        toast._hide = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    // ============================================================
+    //  KEYBOARD SHORTCUTS
+    // ============================================================
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeAdminPanel();
+            closeAdminPrompt();
+            closeMailbox();
+            closeSupport();
+        }
+        if (e.key === 'Enter' && document.getElementById('adminPrompt').classList.contains('open')) {
+            verifyAdminPassword();
+        }
+    });
+
+    // ============================================================
+    //  START
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', init);
+    document.getElementById('adminPasswordInput').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') verifyAdminPassword();
+    });
+
+    console.log('🚀 Tonur App loaded!');
+    console.log('🔐 Admin password: ' + (state ? state.adminPassword : 'tam91207'));
+    console.log('💡 Tap the top-left corner (hidden area) to access admin.');
+    console.log('👤 Your User ID: ' + userId);
+</script>
 </body>
 </html>
